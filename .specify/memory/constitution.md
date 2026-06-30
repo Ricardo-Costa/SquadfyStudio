@@ -94,6 +94,25 @@ relevant `plan.md` under Complexity Tracking:
   "Architectural Decisions" section, delivered before the 2026-07-02 deadline.
 - The delivered repository MUST be public on GitHub.
 
+### Speckit Workflow Discipline (NON-NEGOTIABLE)
+
+All Speckit artifacts (`spec.md`, `plan.md`, `tasks.md`, `research.md`, `data-model.md`,
+`contracts/`, `quickstart.md`) MUST be generated exclusively through the designated Speckit
+slash commands. Manual creation or direct editing of these files outside of the command cycle
+is PROHIBITED. The enforced command sequence is:
+
+```
+/speckit-specify → /speckit-clarify → /speckit-plan → /speckit-tasks → /speckit-implement
+```
+
+Each artifact is the authoritative output of its command. Any deviation (e.g., manually
+writing a `spec.md` or editing `plan.md` without running `/speckit-plan`) breaks the audit
+trail and invalidates the downstream workflow.
+
+**Rationale**: The spec-driven cycle is the source of truth for architectural decisions,
+task traceability, and delivery audit. Manual edits outside the commands undermine
+reproducibility and reviewability of every feature decision.
+
 ### Git Discipline (NON-NEGOTIABLE)
 
 **Branch protection**: Direct commits to `main` are PROHIBITED. All work MUST land on
@@ -122,4 +141,4 @@ principle or section; PATCH: clarification/wording), (3) updating `LAST_AMENDED_
 All feature plans MUST pass the Constitution Check gate in `plan.md` before Phase 0 research
 begins and MUST be re-checked after Phase 1 design.
 
-**Version**: 1.1.0 | **Ratified**: 2026-06-29 | **Last Amended**: 2026-06-29
+**Version**: 1.2.0 | **Ratified**: 2026-06-29 | **Last Amended**: 2026-06-30
