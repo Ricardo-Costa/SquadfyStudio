@@ -3,7 +3,7 @@
     {
       "id": "d001",
       "name": "Ana Lima",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d001",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d001&top=bob&topProbability=100&facialHairProbability=0",
       "seniority": "senior",
       "cost": 95,
       "skills": ["React", "TypeScript", "Next.js", "GraphQL", "Testing"]
@@ -11,7 +11,7 @@
     {
       "id": "d002",
       "name": "Bruno Santos",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d002",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d002&top=shortFlat&topProbability=100&facialHairProbability=25",
       "seniority": "junior",
       "cost": 30,
       "skills": ["JavaScript", "HTML", "CSS", "React", "Git"]
@@ -19,7 +19,7 @@
     {
       "id": "d003",
       "name": "Carla Mendes",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d003",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d003&top=bun&topProbability=100&facialHairProbability=0",
       "seniority": "mid",
       "cost": 62,
       "skills": ["Python", "Django", "PostgreSQL", "REST APIs", "Docker"]
@@ -27,7 +27,7 @@
     {
       "id": "d004",
       "name": "Diego Ferreira",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d004",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d004&top=shortRound&topProbability=100&facialHairProbability=25",
       "seniority": "senior",
       "cost": 112,
       "skills": ["Go", "Docker", "Kubernetes", "AWS", "gRPC"]
@@ -35,7 +35,7 @@
     {
       "id": "d005",
       "name": "Elena Costa",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d005",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d005&top=curly&topProbability=100&facialHairProbability=0",
       "seniority": "mid",
       "cost": 65,
       "skills": ["React", "Node.js", "MongoDB", "TypeScript", "Jest"]
@@ -43,7 +43,7 @@
     {
       "id": "d006",
       "name": "Felipe Oliveira",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d006",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d006&top=shortWaved&topProbability=100&facialHairProbability=25",
       "seniority": "junior",
       "cost": 28,
       "skills": ["React", "HTML", "Tailwind CSS", "JavaScript", "Git"]
@@ -51,7 +51,7 @@
     {
       "id": "d007",
       "name": "Gabriela Rocha",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d007",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d007&top=curvy&topProbability=100&facialHairProbability=0",
       "seniority": "senior",
       "cost": 105,
       "skills": ["Java", "Spring Boot", "AWS", "PostgreSQL", "Microservices"]
@@ -59,7 +59,7 @@
     {
       "id": "d008",
       "name": "Henrique Alves",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d008",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d008&top=shortCurly&topProbability=100&facialHairProbability=25",
       "seniority": "mid",
       "cost": 70,
       "skills": ["TypeScript", "GraphQL", "PostgreSQL", "Node.js", "Redis"]
@@ -67,7 +67,7 @@
     {
       "id": "d009",
       "name": "Isabela Nunes",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d009",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d009&top=frida&topProbability=100&facialHairProbability=0",
       "seniority": "junior",
       "cost": 32,
       "skills": ["Python", "Flask", "SQLite", "REST APIs", "Git"]
@@ -75,7 +75,7 @@
     {
       "id": "d010",
       "name": "João Carvalho",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d010",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d010&top=sides&topProbability=100&facialHairProbability=25",
       "seniority": "senior",
       "cost": 100,
       "skills": ["React", "Next.js", "TypeScript", "Node.js", "AWS"]
@@ -83,7 +83,7 @@
     {
       "id": "d011",
       "name": "Karina Souza",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d011",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d011&top=longButNotTooLong&topProbability=100&facialHairProbability=0",
       "seniority": "mid",
       "cost": 58,
       "skills": ["Vue.js", "JavaScript", "CSS", "Figma", "REST APIs"]
@@ -91,7 +91,7 @@
     {
       "id": "d012",
       "name": "Lucas Martins",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d012",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d012&top=theCaesar&topProbability=100&facialHairProbability=25",
       "seniority": "senior",
       "cost": 98,
       "skills": ["Node.js", "TypeScript", "AWS", "Docker", "Kafka"]
@@ -99,7 +99,7 @@
     {
       "id": "d013",
       "name": "Mariana Pereira",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d013",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d013&top=miaWallace&topProbability=100&facialHairProbability=0",
       "seniority": "junior",
       "cost": 35,
       "skills": ["Kotlin", "Android", "Java", "XML Layouts", "Git"]
@@ -107,7 +107,7 @@
     {
       "id": "d014",
       "name": "Nicolas Ribeiro",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d014",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d014&top=theCaesarAndSidePart&topProbability=100&facialHairProbability=25",
       "seniority": "mid",
       "cost": 62,
       "skills": ["Docker", "Linux", "Bash", "CI/CD", "Terraform"]
@@ -115,7 +115,7 @@
     {
       "id": "d015",
       "name": "Olivia Silva",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d015",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d015&top=straight01&topProbability=100&facialHairProbability=0",
       "seniority": "senior",
       "cost": 90,
       "skills": ["React", "Testing Library", "TypeScript", "Jest", "Cypress"]
@@ -123,7 +123,7 @@
     {
       "id": "d016",
       "name": "Paulo Barbosa",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d016",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d016&top=shaggy&topProbability=100&facialHairProbability=25",
       "seniority": "junior",
       "cost": 27,
       "skills": ["CSS", "Tailwind CSS", "HTML", "Figma", "JavaScript"]
@@ -131,7 +131,7 @@
     {
       "id": "d017",
       "name": "Rafaela Castro",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d017",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d017&top=straight02&topProbability=100&facialHairProbability=0",
       "seniority": "mid",
       "cost": 68,
       "skills": ["Angular", "TypeScript", "Java", "Spring", "PostgreSQL"]
@@ -139,7 +139,7 @@
     {
       "id": "d018",
       "name": "Samuel Torres",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d018",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d018&top=shavedSides&topProbability=100&facialHairProbability=25",
       "seniority": "senior",
       "cost": 85,
       "skills": ["PostgreSQL", "MongoDB", "Redis", "Elasticsearch", "AWS"]
@@ -147,7 +147,7 @@
     {
       "id": "d019",
       "name": "Tatiana Lima",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d019",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d019&top=straightAndStrand&topProbability=100&facialHairProbability=0",
       "seniority": "mid",
       "cost": 72,
       "skills": ["Swift", "iOS", "Xcode", "SwiftUI", "Core Data"]
@@ -155,7 +155,7 @@
     {
       "id": "d020",
       "name": "Ulisses Gomes",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d020",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d020&top=shaggyMullet&topProbability=100&facialHairProbability=25",
       "seniority": "junior",
       "cost": 29,
       "skills": ["JavaScript", "React", "Git", "HTML", "CSS"]
@@ -163,7 +163,7 @@
     {
       "id": "d021",
       "name": "Viviane Fonseca",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d021",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d021&top=bigHair&topProbability=100&facialHairProbability=0",
       "seniority": "senior",
       "cost": 115,
       "skills": ["Python", "Machine Learning", "TensorFlow", "PyTorch", "AWS"]
@@ -171,7 +171,7 @@
     {
       "id": "d022",
       "name": "Wesley Nascimento",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d022",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d022&top=frizzle&topProbability=100&facialHairProbability=25",
       "seniority": "mid",
       "cost": 75,
       "skills": ["Go", "gRPC", "Kubernetes", "Docker", "PostgreSQL"]
