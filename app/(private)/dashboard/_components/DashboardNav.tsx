@@ -15,7 +15,9 @@ const NAV_ITEMS: NavItem[] = [
 ]
 
 function isActive(pathname: string, href: string): boolean {
-  return href === '/dashboard' ? pathname === '/dashboard' : pathname.startsWith(href)
+  if (href !== '/dashboard') return pathname.startsWith(href)
+  // Catálogo also covers /dashboard/<squad-id> (edit mode), but not /dashboard/squads
+  return pathname === '/dashboard' || /^\/dashboard\/\d+$/.test(pathname)
 }
 
 export default function DashboardNav() {
