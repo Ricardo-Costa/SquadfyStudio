@@ -176,5 +176,6 @@
       "cost": 75,
       "skills": ["Go", "gRPC", "Kubernetes", "Docker", "PostgreSQL"]
     }
-  ]
+  ],
+  "squads": []
 }

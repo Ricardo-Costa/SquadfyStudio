@@ -2,6 +2,8 @@
 
 import { useSquad } from '@/hooks/useSquad'
 import SquadMemberCard from './SquadMemberCard'
+import MetricsPanel from './MetricsPanel'
+import SaveSquadButton from './SaveSquadButton'
 
 export default function SquadPanel() {
   const { members, count, isFull, removeMember } = useSquad()
@@ -53,6 +55,13 @@ export default function SquadPanel() {
           </ul>
         )}
       </div>
+
+      {count > 0 && (
+        <div className="border-t border-gray-100 p-4 space-y-3">
+          <MetricsPanel />
+          <SaveSquadButton />
+        </div>
+      )}
     </aside>
   )
 }

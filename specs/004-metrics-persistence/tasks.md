@@ -19,8 +19,8 @@
 
 **Purpose**: Jest infrastructure + JSON Server schema — both are prerequisites for all subsequent work.
 
-- [ ] T001 [P] Create `jest.config.ts` at project root using `next/jest` (`createJestConfig`), `testEnvironment: 'node'`, `moduleNameMapper: { '^@/(.*)$': '<rootDir>/$1' }`
-- [ ] T002 [P] Add `"squads": []` collection to `db.json` alongside the existing `developers` array
+- [X] T001 [P] Create `jest.config.ts` at project root using `next/jest` (`createJestConfig`), `testEnvironment: 'node'`, `moduleNameMapper: { '^@/(.*)$': '<rootDir>/$1' }`
+- [X] T002 [P] Add `"squads": []` collection to `db.json` alongside the existing `developers` array
 
 ---
 
@@ -30,7 +30,7 @@
 
 **⚠️ CRITICAL**: MetricsPanel and Jest tests both import from `lib/metrics.ts` — this file must exist before Phase 3.
 
-- [ ] T003 Create `lib/metrics.ts` with three exported pure functions:
+- [X] T003 Create `lib/metrics.ts` with three exported pure functions:
   - `calcTotalCost(members: Developer[]): number` — sum of `member.cost`, returns 0 for empty
   - `calcAvgSeniority(members: Developer[]): Seniority | null` — junior=1/mid=2/senior=3 → avg → `Math.round()` → clamp [1,3] → label; null for empty squad
   - `calcSkillCoverage(members: Developer[]): string[]` — `flatMap` all skills → `new Set()` → spread → `.sort()`
@@ -48,21 +48,21 @@
 
 ### Tests for User Story 1 (FR-012 — mandatory)
 
-- [ ] T004 [P] [US1] Write Jest unit tests in `lib/metrics.test.ts` covering all cases from `contracts/metrics.md`:
+- [X] T004 [P] [US1] Write Jest unit tests in `lib/metrics.test.ts` covering all cases from `contracts/metrics.md`:
   - `describe('calcTotalCost')`: empty → 0; single member → exact cost; multiple → sum
   - `describe('calcAvgSeniority')`: empty → null; all junior → 'junior'; all senior → 'senior'; junior+senior → 'mid' (avg 2.0); junior+junior+senior → 'mid' (avg 1.67 → round 2); 4 senior + 1 junior → 'senior' (avg 2.6 → round 3)
   - `describe('calcSkillCoverage')`: empty → []; single member → sorted; overlapping skills → deduplicated; result is alphabetically sorted
 
 ### Implementation for User Story 1
 
-- [ ] T005 [P] [US1] Create `app/(private)/dashboard/_components/MetricsPanel.tsx`:
+- [X] T005 [P] [US1] Create `app/(private)/dashboard/_components/MetricsPanel.tsx`:
   - `'use client'` directive
   - Call `useSquad()` to get `members`
   - Single `useMemo(() => ({ totalCost: calcTotalCost(members), avgSeniority: calcAvgSeniority(members), skillCoverage: calcSkillCoverage(members) }), [members])`
   - Render three metric cards: total cost as `$X/hr`, seniority label (or `—` when null), skill count `N skills` (from `skillCoverage.length`)
   - Empty squad shows `$0/hr`, `—`, `0 skills` — no error state
 
-- [ ] T006 [US1] Update `app/(private)/dashboard/_components/SquadPanel.tsx` to render `<MetricsPanel />` below the member list, wrapped in `{count > 0 && (...)}` guard with a top border divider
+- [X] T006 [US1] Update `app/(private)/dashboard/_components/SquadPanel.tsx` to render `<MetricsPanel />` below the member list, wrapped in `{count > 0 && (...)}` guard with a top border divider
 
 **Checkpoint**: US1 fully functional — metrics update live, Jest tests pass (`npm test`).
 
@@ -76,7 +76,7 @@
 
 ### Implementation for User Story 2
 
-- [ ] T007 [US2] Create `app/(private)/dashboard/actions.ts`:
+- [X] T007 [US2] Create `app/(private)/dashboard/actions.ts`:
   - `'use server'` module-level directive
   - `export async function saveSquad(members: Developer[]): Promise<SavedSquad>`
   - Guard: `if (members.length === 0) throw new Error('Cannot save empty squad')`
@@ -85,7 +85,7 @@
   - Return `res.json()` on success
   - Import `Developer` from `@/lib/types`
 
-- [ ] T008 [US2] Create `app/(private)/dashboard/_components/SaveSquadButton.tsx`:
+- [X] T008 [US2] Create `app/(private)/dashboard/_components/SaveSquadButton.tsx`:
   - `'use client'` directive
   - `type SaveState = 'idle' | 'loading' | 'success' | 'error'`
   - `useState<SaveState>('idle')` for current state
@@ -97,7 +97,7 @@
   - Import `saveSquad` from `@/app/(private)/dashboard/actions`
   - Import `useSquad` from `@/hooks/useSquad`
 
-- [ ] T009 [US2] Update `app/(private)/dashboard/_components/SquadPanel.tsx` to render `<SaveSquadButton />` alongside `<MetricsPanel />` in the `count > 0` guard section (below MetricsPanel)
+- [X] T009 [US2] Update `app/(private)/dashboard/_components/SquadPanel.tsx` to render `<SaveSquadButton />` alongside `<MetricsPanel />` in the `count > 0` guard section (below MetricsPanel)
 
 **Checkpoint**: US2 fully functional — save persists to backend, button cycles through all four states correctly.
 
@@ -107,9 +107,9 @@
 
 **Purpose**: Verify correctness across both user stories.
 
-- [ ] T010 [P] Run `npm test` — verify all tests in `lib/metrics.test.ts` pass with no failures or skips. Fix any failing assertions.
+- [X] T010 [P] Run `npm test` — verify all tests in `lib/metrics.test.ts` pass with no failures or skips. Fix any failing assertions.
 
-- [ ] T011 Manual validation against `specs/004-metrics-persistence/quickstart.md`:
+- [X] T011 Manual validation against `specs/004-metrics-persistence/quickstart.md`:
   - Start mock server (`npm run mock`) and dev server (`npm run dev`)
   - Complete US1 checklist: add/remove developers, verify metrics update instantly with correct values
   - Complete US2 checklist: save squad, verify all 4 button states, verify backend record, verify error handling when mock is stopped
