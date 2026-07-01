@@ -26,11 +26,11 @@ export function LoginForm() {
       {state.status === 'error' && (
         <>
           {state.code === 'rate_limited' ? (
-            <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
+            <div className="border-l-2 border-amber-500 pl-3 text-sm text-amber-700">
               Muitas tentativas. Tente novamente em 15 minutos.
             </div>
           ) : (
-            <p className="text-center text-sm text-red-600">
+            <p className="text-sm text-red-600">
               E-mail ou senha inválidos.
             </p>
           )}
