@@ -33,11 +33,11 @@ export default function SquadCard({ data, onClick }: SquadCardProps) {
           onClick()
         }
       }}
-      className={`flex flex-col rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md ${
-        onClick ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500' : ''
+      className={`group flex flex-col border-t-2 border-ink-900 bg-ink-25 p-4 transition-colors hover:border-rust-500 ${
+        onClick ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-rust-400 focus:ring-offset-2' : ''
       }`}
     >
-      <p className="truncate font-semibold text-gray-900">{displayName}</p>
+      <p className="truncate font-display text-lg font-medium text-ink-900">{displayName}</p>
 
       <div className="mt-3 flex -space-x-2">
         {squad.members.slice(0, 5).map((member) => (
@@ -47,28 +47,28 @@ export default function SquadCard({ data, onClick }: SquadCardProps) {
             alt={member.name}
             title={member.name}
             onError={handleAvatarError(member.name)}
-            className="h-8 w-8 rounded-full border-2 border-white object-cover"
+            className="h-8 w-8 rounded-full border-2 border-ink-25 object-cover"
             width={32}
             height={32}
           />
         ))}
       </div>
-      <p className="mt-1 text-xs text-gray-500">{squad.members.length} membros</p>
+      <p className="mt-1.5 text-xs text-ink-500">{squad.members.length} membros</p>
 
-      <div className="mt-3 grid grid-cols-3 gap-2">
-        <div className="rounded-lg bg-gray-50 p-2 text-center">
-          <p className="text-xs text-gray-500">Custo/hr</p>
-          <p className="mt-0.5 text-sm font-bold text-gray-900">${totalCost}</p>
+      <div className="mt-4 flex items-baseline divide-x divide-ink-200 border-t border-ink-200 pt-3">
+        <div className="flex-1 pr-2">
+          <p className="font-display text-lg font-semibold tabular-nums text-ink-900">${totalCost}</p>
+          <p className="text-[10px] uppercase tracking-wide text-ink-500">Custo/hr</p>
         </div>
-        <div className="rounded-lg bg-gray-50 p-2 text-center">
-          <p className="text-xs text-gray-500">Seniority</p>
-          <p className="mt-0.5 text-sm font-bold text-gray-900">
+        <div className="flex-1 px-2">
+          <p className="font-display text-lg font-semibold text-ink-900">
             {avgSeniority ? SENIORITY_LABELS[avgSeniority] : '—'}
           </p>
+          <p className="text-[10px] uppercase tracking-wide text-ink-500">Seniority</p>
         </div>
-        <div className="rounded-lg bg-gray-50 p-2 text-center">
-          <p className="text-xs text-gray-500">Skills</p>
-          <p className="mt-0.5 text-sm font-bold text-gray-900">{skillCoverage.length}</p>
+        <div className="flex-1 pl-2">
+          <p className="font-display text-lg font-semibold tabular-nums text-ink-900">{skillCoverage.length}</p>
+          <p className="text-[10px] uppercase tracking-wide text-ink-500">Skills</p>
         </div>
       </div>
     </div>

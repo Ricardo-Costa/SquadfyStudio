@@ -20,17 +20,14 @@ const EMPTY_SQUADS: SavedSquad[] = []
 
 function SkeletonCard() {
   return (
-    <div
-      className="flex flex-col rounded-xl border border-gray-200 bg-white p-4 shadow-sm"
-      aria-hidden="true"
-    >
-      <div className="h-4 w-2/3 animate-pulse rounded bg-gray-200" />
+    <div className="flex flex-col border-t-2 border-ink-200 bg-ink-25 p-4" aria-hidden="true">
+      <div className="h-4 w-2/3 animate-pulse rounded bg-ink-200" />
       <div className="mt-3 flex -space-x-2">
-        <div className="h-8 w-8 animate-pulse rounded-full border-2 border-white bg-gray-200" />
-        <div className="h-8 w-8 animate-pulse rounded-full border-2 border-white bg-gray-200" />
-        <div className="h-8 w-8 animate-pulse rounded-full border-2 border-white bg-gray-200" />
+        <div className="h-8 w-8 animate-pulse rounded-full border-2 border-ink-25 bg-ink-200" />
+        <div className="h-8 w-8 animate-pulse rounded-full border-2 border-ink-25 bg-ink-200" />
+        <div className="h-8 w-8 animate-pulse rounded-full border-2 border-ink-25 bg-ink-200" />
       </div>
-      <div className="mt-3 h-12 animate-pulse rounded-lg bg-gray-200" />
+      <div className="mt-4 h-10 animate-pulse rounded bg-ink-200" />
     </div>
   )
 }
@@ -52,10 +49,7 @@ function SquadsGrid({
 }) {
   if (isLoading) {
     return (
-      <div
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-        aria-busy="true"
-      >
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-busy="true">
         {Array.from({ length: 6 }).map((_, i) => (
           <SkeletonCard key={i} />
         ))}
@@ -65,14 +59,14 @@ function SquadsGrid({
 
   if (isError) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-xl border border-red-200 bg-red-50 py-16 text-center">
-        <p className="text-base font-medium text-red-700">
+      <div className="flex flex-col items-center justify-center border-t border-ink-200 py-16 text-center">
+        <p className="text-base font-medium text-rust-700">
           Não foi possível carregar os squads.
         </p>
-        <p className="mt-1 text-sm text-red-500">Verifique se o servidor está disponível.</p>
+        <p className="mt-1 text-sm text-ink-500">Verifique se o servidor está disponível.</p>
         <button
           onClick={onRetry}
-          className="mt-4 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+          className="mt-4 rounded-full bg-rust-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-rust-700 focus:outline-none focus:ring-2 focus:ring-rust-500 focus:ring-offset-2"
         >
           Tentar novamente
         </button>
@@ -82,9 +76,9 @@ function SquadsGrid({
 
   if (!squadsExist) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-gray-50 py-16 text-center">
-        <p className="text-base font-medium text-gray-700">Nenhum squad salvo ainda.</p>
-        <p className="mt-1 text-sm text-gray-500">
+      <div className="flex flex-col items-center justify-center border-t border-ink-200 py-16 text-center">
+        <p className="text-base font-medium text-ink-700">Nenhum squad salvo ainda.</p>
+        <p className="mt-1 text-sm text-ink-500">
           Monte um squad no Catálogo e clique em &quot;Salvar Squad&quot;.
         </p>
       </div>
@@ -93,9 +87,9 @@ function SquadsGrid({
 
   if (filtered.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-gray-50 py-16 text-center">
-        <p className="text-base font-medium text-gray-700">Nenhum squad encontrado.</p>
-        <p className="mt-1 text-sm text-gray-500">
+      <div className="flex flex-col items-center justify-center border-t border-ink-200 py-16 text-center">
+        <p className="text-base font-medium text-ink-700">Nenhum squad encontrado.</p>
+        <p className="mt-1 text-sm text-ink-500">
           Tente limpar a busca ou os filtros de senioridade.
         </p>
       </div>
@@ -103,7 +97,7 @@ function SquadsGrid({
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {filtered.map((data) => (
         <SquadCard key={data.squad.id} data={data} onClick={() => onSelect(data.squad.id)} />
       ))}
@@ -177,7 +171,7 @@ export default function SquadsView() {
   } = usePagination(filtered, PAGE_SIZE)
 
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_340px]">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_360px]">
       <div className="order-2 space-y-6 lg:order-1">
         <FilterBar
           name={filterState.name}

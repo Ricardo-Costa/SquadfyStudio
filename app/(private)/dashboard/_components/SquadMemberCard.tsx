@@ -1,11 +1,5 @@
 import type { Developer } from '@/lib/types'
 
-const SENIORITY_STYLES: Record<Developer['seniority'], string> = {
-  junior: 'bg-blue-100 text-blue-700',
-  mid: 'bg-amber-100 text-amber-700',
-  senior: 'bg-emerald-100 text-emerald-700',
-}
-
 const SENIORITY_LABELS: Record<Developer['seniority'], string> = {
   junior: 'Junior',
   mid: 'Mid',
@@ -27,31 +21,27 @@ export default function SquadMemberCard({ member, onRemove }: SquadMemberCardPro
   }
 
   return (
-    <div className="flex items-center gap-3 rounded-lg border border-gray-100 bg-gray-50 p-3">
+    <div className="flex items-center gap-3 py-3">
       <img
         src={avatar}
         alt={name}
         onError={handleAvatarError}
-        className="h-9 w-9 flex-shrink-0 rounded-full object-cover"
+        className="h-9 w-9 flex-shrink-0 rounded-full object-cover ring-1 ring-graphite-600"
         width={36}
         height={36}
       />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold text-gray-900">{name}</p>
-        <div className="mt-0.5 flex items-center gap-2">
-          <span
-            className={`inline-block rounded-full px-1.5 py-0.5 text-xs font-medium ${SENIORITY_STYLES[seniority]}`}
-          >
-            {SENIORITY_LABELS[seniority]}
-          </span>
-          <span className="text-xs text-gray-500">${cost}/hr</span>
-        </div>
+        <p className="truncate text-sm text-graphite-50">{name}</p>
+        <p className="text-xs text-graphite-400">
+          {SENIORITY_LABELS[seniority]} <span className="text-graphite-600">·</span>{' '}
+          <span className="tabular-nums">${cost}/hr</span>
+        </p>
       </div>
       {onRemove && (
         <button
           onClick={() => onRemove(member.id)}
           aria-label="Remover do squad"
-          className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-gray-400 transition-colors duration-150 hover:bg-red-100 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-1"
+          className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-graphite-400 transition-colors duration-150 hover:bg-graphite-800 hover:text-rust-400 focus:outline-none focus:ring-2 focus:ring-rust-400"
         >
           ×
         </button>
