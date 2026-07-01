@@ -2,12 +2,21 @@
 
 import { useMemo, useState } from 'react'
 import { useSquads } from '@/hooks/useSquads'
+import { usePagination } from '@/hooks/usePagination'
 import { calcTotalCost, calcAvgSeniority, calcSkillCoverage } from '@/lib/metrics'
 import { formatSquadName } from '@/lib/squads'
-import type { FilterState, Seniority, SquadCardData } from '@/lib/types'
+import { PAGE_SIZE } from '@/lib/config'
+import type { FilterState, Seniority, SquadCardData, SavedSquad } from '@/lib/types'
 import FilterBar from './FilterBar'
 import SquadCard from './SquadCard'
 import SquadDetailPanel from './SquadDetailPanel'
+import PaginationControls from './PaginationControls'
+
+// Stable reference: `data: squads = []` would create a brand-new empty array
+// on every render while `data` is undefined (loading), which cascades through
+// the useMemo chain into usePagination's reset-on-reference-change logic and
+// triggers an infinite render loop.
+const EMPTY_SQUADS: SavedSquad[] = []
 
 function SkeletonCard() {
   return (
@@ -103,7 +112,7 @@ function SquadsGrid({
 }
 
 export default function SquadsView() {
-  const { data: squads = [], isLoading, isError, refetch } = useSquads()
+  const { data: squads = EMPTY_SQUADS, isLoading, isError, refetch } = useSquads()
 
   const [filterState, setFilterState] = useState<FilterState>({
     name: '',
@@ -157,6 +166,16 @@ export default function SquadsView() {
     ? (enriched.find((data) => data.squad.id === selectedSquadId) ?? null)
     : null
 
+  const {
+    pageItems,
+    currentPage,
+    totalPages,
+    hasPrevious,
+    hasNext,
+    goToPrevious,
+    goToNext,
+  } = usePagination(filtered, PAGE_SIZE)
+
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_340px]">
       <div className="order-2 space-y-6 lg:order-1">
@@ -173,8 +192,16 @@ export default function SquadsView() {
           isError={isError}
           onRetry={refetch}
           squadsExist={enriched.length > 0}
-          filtered={filtered}
+          filtered={pageItems}
           onSelect={setSelectedSquadId}
+        />
+        <PaginationControls
+          currentPage={currentPage}
+          totalPages={totalPages}
+          hasPrevious={hasPrevious}
+          hasNext={hasNext}
+          onPrevious={goToPrevious}
+          onNext={goToNext}
         />
       </div>
       <div className="order-1 lg:order-2">
