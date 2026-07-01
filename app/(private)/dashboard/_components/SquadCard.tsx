@@ -8,13 +8,35 @@ const SENIORITY_LABELS = {
 
 interface SquadCardProps {
   data: SquadCardData
+  onClick?: () => void
 }
 
-export default function SquadCard({ data }: SquadCardProps) {
+export default function SquadCard({ data, onClick }: SquadCardProps) {
   const { squad, displayName, totalCost, avgSeniority, skillCoverage } = data
 
+  function handleAvatarError(name: string) {
+    return (e: React.SyntheticEvent<HTMLImageElement>) => {
+      const img = e.currentTarget
+      img.onerror = null
+      img.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`
+    }
+  }
+
   return (
-    <div className="flex flex-col rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
+    <div
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault()
+          onClick()
+        }
+      }}
+      className={`flex flex-col rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md ${
+        onClick ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500' : ''
+      }`}
+    >
       <p className="truncate font-semibold text-gray-900">{displayName}</p>
 
       <div className="mt-3 flex -space-x-2">
@@ -24,6 +46,7 @@ export default function SquadCard({ data }: SquadCardProps) {
             src={member.avatar}
             alt={member.name}
             title={member.name}
+            onError={handleAvatarError(member.name)}
             className="h-8 w-8 rounded-full border-2 border-white object-cover"
             width={32}
             height={32}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useSquad } from '@/hooks/useSquad'
 import { saveSquad } from '@/app/(private)/dashboard/actions'
 import SaveSquadModal from './SaveSquadModal'
@@ -8,7 +9,8 @@ import SaveSquadModal from './SaveSquadModal'
 type SaveState = 'idle' | 'loading' | 'success' | 'error'
 
 export default function SaveSquadButton() {
-  const { members } = useSquad()
+  const { members, editingSquadId, editingSquadName } = useSquad()
+  const queryClient = useQueryClient()
   const [saveState, setSaveState] = useState<SaveState>('idle')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -35,7 +37,8 @@ export default function SaveSquadButton() {
     setIsModalOpen(false)
     setSaveState('loading')
     try {
-      await saveSquad(name, members)
+      await saveSquad(name, members, editingSquadId ?? undefined)
+      queryClient.invalidateQueries({ queryKey: ['squads'] })
       setSaveState('success')
       timerRef.current = setTimeout(() => setSaveState('idle'), 2000)
     } catch {
@@ -77,6 +80,7 @@ export default function SaveSquadButton() {
         isOpen={isModalOpen}
         onConfirm={handleConfirm}
         onCancel={() => setIsModalOpen(false)}
+        initialName={editingSquadName ?? undefined}
       />
     </>
   )

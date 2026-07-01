@@ -5,10 +5,14 @@ export const MAX_SQUAD_SIZE = 5
 
 export interface SquadState {
   members: Developer[]
+  editingSquadId: number | null
+  editingSquadName: string | null
 }
 
 export const initialSquadState: SquadState = {
   members: [],
+  editingSquadId: null,
+  editingSquadName: null,
 }
 
 export function squadReducer(state: SquadState, action: SquadAction): SquadState {
@@ -20,11 +24,20 @@ export function squadReducer(state: SquadState, action: SquadAction): SquadState
       ) {
         return state
       }
-      return { members: [...state.members, action.payload] }
+      return { ...state, members: [...state.members, action.payload] }
     }
-    case 'REMOVE_MEMBER':
+    case 'REMOVE_MEMBER': {
+      const members = state.members.filter((m) => m.id !== action.payload)
+      if (members.length === 0) {
+        return { members, editingSquadId: null, editingSquadName: null }
+      }
+      return { ...state, members }
+    }
+    case 'LOAD_SQUAD':
       return {
-        members: state.members.filter((m) => m.id !== action.payload),
+        members: action.payload.members,
+        editingSquadId: action.payload.id,
+        editingSquadName: action.payload.name,
       }
     default:
       return state
