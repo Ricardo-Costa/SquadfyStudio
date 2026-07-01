@@ -122,5 +122,5 @@ Fixed credentials for login (define in env or hardcode in the server action for 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
 shell commands, and other important information, read the current plan at
-`specs/008-grid-pagination/plan.md`
+`specs/009-logout-action/plan.md`
 <!-- SPECKIT END -->
