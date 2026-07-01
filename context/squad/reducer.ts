@@ -27,9 +27,6 @@ export function squadReducer(state: SquadState, action: SquadAction): SquadState
     }
     case 'REMOVE_MEMBER': {
       const members = state.members.filter((m) => m.id !== action.payload)
-      if (members.length === 0) {
-        return { members, editingSquadId: null, editingSquadName: null }
-      }
       return { ...state, members }
     }
     case 'LOAD_SQUAD':
@@ -40,9 +37,6 @@ export function squadReducer(state: SquadState, action: SquadAction): SquadState
       }
     case 'RESET_SQUAD':
       return initialSquadState
-    case 'CLEAR_EDIT_ASSOCIATION':
-      if (state.editingSquadId === null) return state
-      return { ...state, editingSquadId: null, editingSquadName: null }
     default:
       return state
   }
