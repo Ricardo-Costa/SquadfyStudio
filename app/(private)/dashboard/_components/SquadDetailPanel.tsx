@@ -57,7 +57,7 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
           type="button"
           onClick={onClose}
           aria-label="Fechar detalhes"
-          className="rounded-full p-1 text-graphite-400 hover:bg-graphite-800 hover:text-graphite-50"
+          className="rounded-full p-1 text-graphite-400 hover:bg-graphite-800 hover:text-graphite-50 focus:outline-none focus:ring-2 focus:ring-rust-400 focus:ring-offset-2 focus:ring-offset-graphite-700"
         >
           ×
         </button>
@@ -104,7 +104,7 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
         <button
           type="button"
           onClick={handleEdit}
-          className="w-full rounded-full bg-rust-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-rust-400"
+          className="w-full rounded-full bg-rust-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-rust-400 focus:outline-none focus:ring-2 focus:ring-rust-400 focus:ring-offset-2 focus:ring-offset-graphite-700"
         >
           Editar
         </button>

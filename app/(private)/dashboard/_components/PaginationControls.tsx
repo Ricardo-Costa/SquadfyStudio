@@ -23,7 +23,7 @@ export default function PaginationControls({
         type="button"
         onClick={onPrevious}
         disabled={!hasPrevious}
-        className="text-sm font-medium text-ink-600 transition-colors hover:text-rust-600 disabled:cursor-not-allowed disabled:text-ink-300 disabled:hover:text-ink-300"
+        className="rounded text-sm font-medium text-ink-600 transition-colors hover:text-rust-600 focus:outline-none focus:ring-2 focus:ring-rust-400 focus:ring-offset-2 focus:ring-offset-ink-50 disabled:cursor-not-allowed disabled:text-ink-300 disabled:hover:text-ink-300"
       >
         ← Previous
       </button>
@@ -34,7 +34,7 @@ export default function PaginationControls({
         type="button"
         onClick={onNext}
         disabled={!hasNext}
-        className="text-sm font-medium text-ink-600 transition-colors hover:text-rust-600 disabled:cursor-not-allowed disabled:text-ink-300 disabled:hover:text-ink-300"
+        className="rounded text-sm font-medium text-ink-600 transition-colors hover:text-rust-600 focus:outline-none focus:ring-2 focus:ring-rust-400 focus:ring-offset-2 focus:ring-offset-ink-50 disabled:cursor-not-allowed disabled:text-ink-300 disabled:hover:text-ink-300"
       >
         Next →
       </button>

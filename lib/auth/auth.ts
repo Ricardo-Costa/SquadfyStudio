@@ -23,7 +23,10 @@ export async function signToken(payload: Pick<TokenPayload, 'sub'>): Promise<str
 export async function verifyToken(token: string): Promise<TokenPayload | null> {
   try {
     const { payload } = await jwtVerify(token, getSecret())
-    return payload as unknown as TokenPayload
+    if (typeof payload.sub !== 'string' || typeof payload.iat !== 'number' || typeof payload.exp !== 'number') {
+      return null
+    }
+    return { sub: payload.sub, iat: payload.iat, exp: payload.exp }
   } catch {
     return null
   }
