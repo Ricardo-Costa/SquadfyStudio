@@ -3,6 +3,7 @@
 import { use } from 'react'
 import { SquadContext } from '@/context/squad/SquadContext'
 import type { Developer } from '@/lib/types'
+import { MAX_SQUAD_SIZE } from '@/lib/config'
 
 export function useSquad() {
   const ctx = use(SquadContext)
@@ -11,7 +12,7 @@ export function useSquad() {
   return {
     members: state.members,
     count: state.members.length,
-    isFull: state.members.length >= 5,
+    isFull: state.members.length >= MAX_SQUAD_SIZE,
     isMember: (id: string) => state.members.some((m) => m.id === id),
     addMember: (dev: Developer) => dispatch({ type: 'ADD_MEMBER', payload: dev }),
     removeMember: (id: string) => dispatch({ type: 'REMOVE_MEMBER', payload: id }),

@@ -1,7 +1,6 @@
 import type { Developer } from '@/lib/types'
 import type { SquadAction } from './actions'
-
-export const MAX_SQUAD_SIZE = 5
+import { MAX_SQUAD_SIZE } from '@/lib/config'
 
 export interface SquadState {
   members: Developer[]

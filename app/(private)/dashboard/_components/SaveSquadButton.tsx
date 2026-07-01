@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useQueryClient } from '@tanstack/react-query'
 import { useSquad } from '@/hooks/useSquad'
 import { saveSquad } from '@/app/(private)/dashboard/actions'
+import { SAVE_ERROR_RESET_MS } from '@/lib/config'
 import SaveSquadModal from './SaveSquadModal'
 
 type SaveState = 'idle' | 'loading' | 'error'
@@ -42,7 +43,7 @@ export default function SaveSquadButton() {
       router.push('/dashboard/squads')
     } catch {
       setSaveState('error')
-      timerRef.current = setTimeout(() => setSaveState('idle'), 3000)
+      timerRef.current = setTimeout(() => setSaveState('idle'), SAVE_ERROR_RESET_MS)
     }
   }
 

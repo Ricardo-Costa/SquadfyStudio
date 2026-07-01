@@ -3,12 +3,21 @@
 import { useMemo, useState } from 'react'
 import { useDevelopers } from '@/hooks/useDevelopers'
 import { useSquad } from '@/hooks/useSquad'
-import type { FilterState, Seniority } from '@/lib/types'
+import { usePagination } from '@/hooks/usePagination'
+import { PAGE_SIZE } from '@/lib/config'
+import type { Developer, FilterState, Seniority } from '@/lib/types'
 import CatalogueGrid from './CatalogueGrid'
 import FilterBar from './FilterBar'
+import PaginationControls from './PaginationControls'
+
+// Stable reference: `data: developers = []` would create a brand-new empty
+// array on every render while `data` is undefined (loading), which cascades
+// through the useMemo chain into usePagination's reset-on-reference-change
+// logic and triggers an infinite render loop.
+const EMPTY_DEVELOPERS: Developer[] = []
 
 export default function CatalogueView() {
-  const { data: developers = [], isLoading, isError, refetch } = useDevelopers()
+  const { data: developers = EMPTY_DEVELOPERS, isLoading, isError, refetch } = useDevelopers()
   const { isFull, isMember, addMember } = useSquad()
 
   const [filterState, setFilterState] = useState<FilterState>({
@@ -32,6 +41,16 @@ export default function CatalogueView() {
     [developers, filterState]
   )
 
+  const {
+    pageItems,
+    currentPage,
+    totalPages,
+    hasPrevious,
+    hasNext,
+    goToPrevious,
+    goToNext,
+  } = usePagination(filteredDevelopers, PAGE_SIZE)
+
   function handleNameChange(name: string) {
     setFilterState((s) => ({ ...s, name }))
   }
@@ -54,13 +73,21 @@ export default function CatalogueView() {
         onSeniorityToggle={handleSeniorityToggle}
       />
       <CatalogueGrid
-        developers={filteredDevelopers}
+        developers={pageItems}
         isLoading={isLoading}
         isError={isError}
         onRetry={refetch}
         isMember={isMember}
         isFull={isFull}
         onAdd={addMember}
+      />
+      <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        hasPrevious={hasPrevious}
+        hasNext={hasNext}
+        onPrevious={goToPrevious}
+        onNext={goToNext}
       />
     </div>
   )

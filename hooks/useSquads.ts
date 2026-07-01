@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import type { SavedSquad } from '@/lib/types'
+import { API_BASE_URL } from '@/lib/config'
 
 async function fetchSquads(): Promise<SavedSquad[]> {
-  const res = await fetch('http://localhost:3001/squads')
+  const res = await fetch(`${API_BASE_URL}/squads`)
   if (!res.ok) throw new Error('Failed to fetch squads')
   const squads: SavedSquad[] = await res.json()
   return [...squads].sort(

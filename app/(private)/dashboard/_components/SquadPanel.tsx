@@ -1,6 +1,7 @@
 'use client'
 
 import { useSquad } from '@/hooks/useSquad'
+import { MAX_SQUAD_SIZE } from '@/lib/config'
 import SquadMemberCard from './SquadMemberCard'
 import MetricsPanel from './MetricsPanel'
 import SaveSquadButton from './SaveSquadButton'
@@ -19,7 +20,9 @@ export default function SquadPanel() {
             isFull ? 'text-amber-600' : 'text-gray-500'
           }`}
         >
-          {isFull ? `Squad completo! (${count}/5)` : `${count}/5 membros`}
+          {isFull
+            ? `Squad completo! (${count}/${MAX_SQUAD_SIZE})`
+            : `${count}/${MAX_SQUAD_SIZE} membros`}
         </p>
       </div>
 
