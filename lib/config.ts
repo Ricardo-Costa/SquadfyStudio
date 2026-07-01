@@ -13,3 +13,9 @@ export const MAX_SQUAD_SIZE = 5
 
 /** How long the "Erro ao salvar" state stays visible before reverting to idle (ms). */
 export const SAVE_ERROR_RESET_MS = 3000
+
+/** Failed login attempts allowed before an IP is temporarily blocked. */
+export const RATE_LIMIT_MAX_ATTEMPTS = 5
+
+/** How long an IP stays blocked after exceeding RATE_LIMIT_MAX_ATTEMPTS (ms). */
+export const RATE_LIMIT_BLOCK_DURATION_MS = 15 * 60 * 1000

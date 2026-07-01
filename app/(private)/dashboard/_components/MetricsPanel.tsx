@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import { useSquad } from '@/hooks/useSquad'
-import { calcTotalCost, calcAvgSeniority, calcSkillCoverage } from '@/lib/metrics'
+import { calcTotalCost, calcAvgSeniority, calcSkillCoverage } from '@/lib/squad/metrics'
 import { SENIORITY_LABELS } from '@/lib/types'
 
 export default function MetricsPanel() {
