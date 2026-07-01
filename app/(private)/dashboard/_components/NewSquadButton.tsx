@@ -6,17 +6,37 @@ import { useSquad } from '@/hooks/useSquad'
 import ConfirmDialog from './ConfirmDialog'
 
 export default function NewSquadButton() {
-  const { count, resetSquad } = useSquad()
+  const { count, isDirty, resetSquad } = useSquad()
   const router = useRouter()
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
   if (count === 0) return null
 
+  function startNew() {
+    resetSquad()
+    // Leaving any /dashboard/<squad-id> edit route is required here:
+    // staying on it would let that route's SquadEditLoader see
+    // editingSquadId reset to null (≠ the URL's squadId) and reload
+    // the same squad right back into the builder, undoing the reset.
+    router.push('/dashboard')
+  }
+
+  function handleClick() {
+    // Only interrupt with a confirmation if the builder actually diverges from
+    // whatever's saved (isDirty) — a cleanly loaded, unmodified squad has
+    // nothing to lose by starting over.
+    if (isDirty) {
+      setIsConfirmOpen(true)
+      return
+    }
+    startNew()
+  }
+
   return (
     <>
       <button
         type="button"
-        onClick={() => setIsConfirmOpen(true)}
+        onClick={handleClick}
         className="rounded-full border border-ink-300 px-4 py-2 text-sm font-medium text-ink-700 transition-colors hover:border-rust-400 hover:text-rust-600"
       >
         Novo Squad
@@ -28,12 +48,7 @@ export default function NewSquadButton() {
         confirmLabel="Começar novo"
         onConfirm={() => {
           setIsConfirmOpen(false)
-          resetSquad()
-          // Leaving any /dashboard/<squad-id> edit route is required here:
-          // staying on it would let that route's SquadEditLoader see
-          // editingSquadId reset to null (≠ the URL's squadId) and reload
-          // the same squad right back into the builder, undoing the reset.
-          router.push('/dashboard')
+          startNew()
         }}
         onCancel={() => setIsConfirmOpen(false)}
       />
