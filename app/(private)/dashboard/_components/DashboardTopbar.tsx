@@ -1,12 +1,9 @@
+import { EMAIL_DISPLAY_MAX_LENGTH } from '@/lib/config'
 import LogoutButton from './LogoutButton'
 
 interface DashboardTopbarProps {
   email: string | null
 }
-
-// Keeps the topbar compact regardless of how long the logged-in email is —
-// the full address is still available via the cluster's title tooltip on hover.
-const EMAIL_DISPLAY_MAX_LENGTH = 24
 
 function truncateEmail(email: string): string {
   return email.length > EMAIL_DISPLAY_MAX_LENGTH

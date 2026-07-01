@@ -13,3 +13,6 @@ export const MAX_SQUAD_SIZE = 5
 
 /** How long the "Erro ao salvar" state stays visible before reverting to idle (ms). */
 export const SAVE_ERROR_RESET_MS = 3000
+
+/** Max characters shown for the logged-in email in the topbar before truncating with "…". */
+export const EMAIL_DISPLAY_MAX_LENGTH = 24
