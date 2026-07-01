@@ -19,5 +19,6 @@ export function useSquad() {
     editingSquadName: state.editingSquadName,
     loadSquad: (id: number, name: string, members: Developer[]) =>
       dispatch({ type: 'LOAD_SQUAD', payload: { id, name, members } }),
+    resetSquad: () => dispatch({ type: 'RESET_SQUAD' }),
   }
 }

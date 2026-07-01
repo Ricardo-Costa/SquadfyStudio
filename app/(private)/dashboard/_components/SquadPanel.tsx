@@ -1,19 +1,37 @@
 'use client'
 
+import { useState } from 'react'
 import { useSquad } from '@/hooks/useSquad'
 import SquadMemberCard from './SquadMemberCard'
 import MetricsPanel from './MetricsPanel'
 import SaveSquadButton from './SaveSquadButton'
+import ConfirmDialog from './ConfirmDialog'
 
 export default function SquadPanel() {
-  const { members, count, isFull, removeMember, editingSquadName } = useSquad()
+  const { members, count, isFull, removeMember, editingSquadName, resetSquad } = useSquad()
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
+
+  function handleNewSquad() {
+    setIsConfirmOpen(true)
+  }
 
   return (
     <aside className="flex flex-col rounded-xl border border-gray-200 bg-white shadow-sm lg:sticky lg:top-8 lg:self-start">
       <div className="border-b border-gray-200 px-4 py-3">
-        <h2 className="font-semibold text-gray-900">
-          Squad: {editingSquadName ?? '...'}
-        </h2>
+        <div className="flex items-start justify-between gap-2">
+          <h2 className="font-semibold text-gray-900">
+            Squad: {editingSquadName ?? '...'}
+          </h2>
+          {count > 0 && (
+            <button
+              type="button"
+              onClick={handleNewSquad}
+              className="shrink-0 text-xs font-medium text-blue-600 hover:text-blue-700 hover:underline"
+            >
+              Novo Squad
+            </button>
+          )}
+        </div>
         <p
           className={`mt-0.5 text-sm font-semibold ${
             isFull ? 'text-amber-600' : 'text-gray-500'
@@ -64,6 +82,18 @@ export default function SquadPanel() {
           <SaveSquadButton />
         </div>
       )}
+
+      <ConfirmDialog
+        isOpen={isConfirmOpen}
+        title="Começar um novo squad?"
+        message="Isso vai limpar o squad atual do builder. Squads já salvos não são afetados."
+        confirmLabel="Começar novo"
+        onConfirm={() => {
+          setIsConfirmOpen(false)
+          resetSquad()
+        }}
+        onCancel={() => setIsConfirmOpen(false)}
+      />
     </aside>
   )
 }
