@@ -20,13 +20,12 @@ interface SquadDetailPanelProps {
 
 export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProps) {
   const router = useRouter()
-  const { count, editingSquadId, loadSquad } = useSquad()
+  const { count, editingSquadId } = useSquad()
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
   function proceedToEdit() {
     if (!data) return
-    loadSquad(data.squad.id, data.displayName, data.squad.members)
-    router.push('/dashboard')
+    router.push(`/dashboard/${data.squad.id}`)
   }
 
   function handleEdit() {
