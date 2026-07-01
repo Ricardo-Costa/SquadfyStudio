@@ -54,10 +54,10 @@ export default function SaveSquadModal({
         role="dialog"
         aria-modal="true"
         aria-label="Nomear squad"
-        className="relative w-full max-w-sm rounded-xl bg-white p-5 shadow-xl"
+        className="relative w-full max-w-sm rounded-2xl bg-ink-25 p-6 shadow-xl"
       >
-        <h2 className="text-base font-semibold text-gray-900">Nomear squad</h2>
-        <p className="mt-1 text-sm text-gray-500">
+        <h2 className="font-display text-xl font-semibold text-ink-900">Nomear squad</h2>
+        <p className="mt-1 text-sm text-ink-500">
           Dê um nome para encontrar este squad depois.
         </p>
 
@@ -71,17 +71,17 @@ export default function SaveSquadModal({
           }}
           placeholder="Ex: Squad Alpha"
           aria-label="Nome do squad"
-          className="mt-4 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="mt-4 w-full border-b border-ink-300 bg-transparent px-1 py-2 text-sm text-ink-900 placeholder-ink-400 focus:border-rust-500 focus:outline-none"
         />
         {isInvalid && (
           <p className="mt-1.5 text-xs text-red-600">O nome do squad é obrigatório.</p>
         )}
 
-        <div className="mt-5 flex justify-end gap-2">
+        <div className="mt-6 flex justify-end gap-2">
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-lg px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100"
+            className="rounded-full px-4 py-2 text-sm font-semibold text-ink-600 hover:bg-ink-100"
           >
             Cancelar
           </button>
@@ -89,10 +89,10 @@ export default function SaveSquadModal({
             type="button"
             onClick={handleConfirm}
             disabled={isInvalid}
-            className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
+            className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
               isInvalid
-                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
+                ? 'bg-ink-100 text-ink-400 cursor-not-allowed'
+                : 'bg-rust-500 text-white hover:bg-rust-400'
             }`}
           >
             Salvar

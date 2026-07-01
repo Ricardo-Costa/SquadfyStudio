@@ -17,7 +17,7 @@ export default function NewSquadButton() {
       <button
         type="button"
         onClick={() => setIsConfirmOpen(true)}
-        className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+        className="rounded-full border border-ink-300 px-4 py-2 text-sm font-medium text-ink-700 transition-colors hover:border-rust-400 hover:text-rust-600"
       >
         Novo Squad
       </button>

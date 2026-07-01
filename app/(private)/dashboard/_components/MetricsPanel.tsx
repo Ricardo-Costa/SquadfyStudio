@@ -23,23 +23,20 @@ export default function MetricsPanel() {
   )
 
   return (
-    <div className="space-y-2">
-      <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-500">Métricas do Squad</h3>
-      <div className="grid grid-cols-3 gap-2">
-        <div className="rounded-lg bg-gray-50 p-2 text-center">
-          <p className="text-xs text-gray-500">Custo/hr</p>
-          <p className="mt-0.5 text-sm font-bold text-gray-900">${metrics.totalCost}</p>
-        </div>
-        <div className="rounded-lg bg-gray-50 p-2 text-center">
-          <p className="text-xs text-gray-500">Seniority</p>
-          <p className="mt-0.5 text-sm font-bold text-gray-900">
-            {metrics.avgSeniority ? SENIORITY_LABEL[metrics.avgSeniority] : '—'}
-          </p>
-        </div>
-        <div className="rounded-lg bg-gray-50 p-2 text-center">
-          <p className="text-xs text-gray-500">Skills</p>
-          <p className="mt-0.5 text-sm font-bold text-gray-900">{metrics.skillCoverage.length}</p>
-        </div>
+    <div className="flex items-baseline divide-x divide-graphite-600 border-t border-graphite-600 pt-4">
+      <div className="flex-1 pr-3">
+        <p className="font-display text-2xl font-semibold tabular-nums text-graphite-50">${metrics.totalCost}</p>
+        <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Custo/hr</p>
+      </div>
+      <div className="flex-1 px-3">
+        <p className="font-display text-2xl font-semibold text-graphite-50">
+          {metrics.avgSeniority ? SENIORITY_LABEL[metrics.avgSeniority] : '—'}
+        </p>
+        <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Seniority</p>
+      </div>
+      <div className="flex-1 pl-3">
+        <p className="font-display text-2xl font-semibold tabular-nums text-graphite-50">{metrics.skillCoverage.length}</p>
+        <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Skills</p>
       </div>
     </div>
   )

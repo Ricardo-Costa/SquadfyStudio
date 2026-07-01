@@ -1,9 +1,9 @@
 import type { Developer } from '@/lib/types'
 
-const SENIORITY_STYLES: Record<Developer['seniority'], string> = {
-  junior: 'bg-blue-100 text-blue-700',
-  mid: 'bg-amber-100 text-amber-700',
-  senior: 'bg-emerald-100 text-emerald-700',
+const SENIORITY_DOT: Record<Developer['seniority'], string> = {
+  junior: 'bg-seniority-junior',
+  mid: 'bg-seniority-mid',
+  senior: 'bg-seniority-senior',
 }
 
 const SENIORITY_LABELS: Record<Developer['seniority'], string> = {
@@ -34,50 +34,43 @@ export default function DeveloperCard({
   }
 
   return (
-    <div className="flex flex-col rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
-      <div className="flex items-center gap-3">
+    <div className="group flex flex-col border-b border-ink-200 py-5 transition-colors last:border-b-0">
+      <div className="flex items-start gap-3">
         <img
           src={avatar}
           alt={name}
           onError={handleAvatarError}
-          className="h-12 w-12 rounded-full object-cover"
+          className="h-12 w-12 flex-shrink-0 rounded-full object-cover ring-1 ring-ink-200"
           width={48}
           height={48}
         />
-        <div className="min-w-0">
-          <p className="truncate font-semibold text-gray-900">{name}</p>
-          <span
-            className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${SENIORITY_STYLES[seniority]}`}
-          >
+        <div className="min-w-0 flex-1">
+          <p className="truncate font-display text-lg font-medium text-ink-900">{name}</p>
+          <div className="mt-0.5 flex items-center gap-1.5 text-xs text-ink-500">
+            <span className={`h-1.5 w-1.5 rounded-full ${SENIORITY_DOT[seniority]}`} aria-hidden="true" />
             {SENIORITY_LABELS[seniority]}
-          </span>
+            <span className="text-ink-300">·</span>
+            <span className="tabular-nums">${cost}/hr</span>
+          </div>
         </div>
       </div>
 
-      <p className="mt-3 text-sm font-medium text-gray-600">${cost}/hr</p>
-
-      <div className="mt-2 flex flex-wrap gap-1">
-        {skills.map((skill) => (
-          <span
-            key={skill}
-            className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600"
-          >
-            {skill}
-          </span>
-        ))}
-      </div>
+      <p className="mt-3 text-xs leading-relaxed text-ink-500">
+        {skills.join(' · ')}
+      </p>
 
       <div className="mt-4">
         {isInSquad ? (
-          <span className="inline-flex w-full items-center justify-center rounded-lg bg-emerald-100 px-3 py-1.5 text-sm font-medium text-emerald-700">
-            ✓ No Squad
+          <span className="inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-seniority-senior">
+            <span className="h-1.5 w-1.5 rounded-full bg-seniority-senior" aria-hidden="true" />
+            No squad
           </span>
         ) : isFull ? (
           <button
             disabled
             aria-disabled="true"
             aria-label="Adicionar ao squad"
-            className="w-full cursor-not-allowed rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-400 opacity-50"
+            className="w-full cursor-not-allowed rounded-full border border-ink-200 py-1.5 text-sm font-medium text-ink-300"
           >
             Adicionar
           </button>
@@ -85,7 +78,7 @@ export default function DeveloperCard({
           <button
             onClick={() => onAdd?.(developer)}
             aria-label="Adicionar ao squad"
-            className="w-full rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="w-full rounded-full border border-ink-300 py-1.5 text-sm font-medium text-ink-700 transition-colors duration-150 hover:border-rust-500 hover:bg-rust-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-rust-400 focus:ring-offset-2 focus:ring-offset-ink-50"
           >
             Adicionar
           </button>
