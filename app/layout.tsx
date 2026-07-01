@@ -1,8 +1,16 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Space_Grotesk, Instrument_Sans } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-display',
+})
+
+const instrumentSans = Instrument_Sans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+})
 
 export const metadata: Metadata = {
   title: 'Squadfy Studio',
@@ -16,7 +24,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className={`${inter.className} bg-gray-50 text-gray-900 antialiased`}>
+      <body
+        className={`${spaceGrotesk.variable} ${instrumentSans.variable} bg-ink-50 font-sans text-ink-900 antialiased`}
+      >
         {children}
       </body>
     </html>

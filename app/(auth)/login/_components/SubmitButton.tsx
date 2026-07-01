@@ -10,12 +10,12 @@ export function SubmitButton() {
       type="submit"
       disabled={pending}
       className={`
-        w-full rounded-lg px-4 py-2.5 text-sm font-semibold text-white
+        w-full rounded-full px-4 py-2.5 text-sm font-semibold text-white
         transition-all duration-150 focus:outline-none focus:ring-2
-        focus:ring-indigo-500 focus:ring-offset-2
+        focus:ring-rust-400 focus:ring-offset-2
         ${pending
-          ? 'bg-indigo-400 cursor-not-allowed'
-          : 'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800'
+          ? 'bg-rust-700 cursor-not-allowed'
+          : 'bg-rust-500 hover:bg-rust-400 active:bg-rust-600'
         }
       `}
     >

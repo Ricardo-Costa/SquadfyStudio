@@ -41,23 +41,23 @@ export default function ConfirmDialog({
         role="alertdialog"
         aria-modal="true"
         aria-label={title}
-        className="relative w-full max-w-sm rounded-xl bg-white p-5 shadow-xl"
+        className="relative w-full max-w-sm rounded-2xl bg-ink-25 p-6 shadow-xl"
       >
-        <h2 className="text-base font-semibold text-gray-900">{title}</h2>
-        <p className="mt-2 text-sm text-gray-600">{message}</p>
+        <h2 className="font-display text-xl font-semibold text-ink-900">{title}</h2>
+        <p className="mt-2 text-sm text-ink-600">{message}</p>
 
-        <div className="mt-5 flex justify-end gap-2">
+        <div className="mt-6 flex justify-end gap-2">
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-lg px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100"
+            className="rounded-full px-4 py-2 text-sm font-semibold text-ink-600 hover:bg-ink-100"
           >
             {cancelLabel}
           </button>
           <button
             type="button"
             onClick={onConfirm}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+            className="rounded-full bg-rust-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-rust-400"
           >
             {confirmLabel}
           </button>

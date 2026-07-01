@@ -1,60 +1,104 @@
 'use client'
 
+import type { Developer } from '@/lib/types'
 import { useSquad } from '@/hooks/useSquad'
 import { MAX_SQUAD_SIZE } from '@/lib/config'
-import SquadMemberCard from './SquadMemberCard'
 import MetricsPanel from './MetricsPanel'
 import SaveSquadButton from './SaveSquadButton'
+
+const SENIORITY_LABELS: Record<Developer['seniority'], string> = {
+  junior: 'Junior',
+  mid: 'Mid',
+  senior: 'Senior',
+}
+
+interface RosterRowProps {
+  member: Developer
+  index: number
+  onRemove: (id: string) => void
+}
+
+function RosterRow({ member, index, onRemove }: RosterRowProps) {
+  function handleAvatarError(e: React.SyntheticEvent<HTMLImageElement>) {
+    const img = e.currentTarget
+    img.onerror = null
+    img.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(member.name)}`
+  }
+
+  return (
+    <div className="group flex items-center gap-3 py-3">
+      <span className="w-4 shrink-0 text-right text-xs tabular-nums text-graphite-500">
+        {index + 1}
+      </span>
+      <img
+        src={member.avatar}
+        alt={member.name}
+        onError={handleAvatarError}
+        className="h-9 w-9 flex-shrink-0 rounded-full object-cover ring-1 ring-graphite-600"
+        width={36}
+        height={36}
+      />
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-sm text-graphite-50">{member.name}</p>
+        <p className="text-xs text-graphite-400">
+          {SENIORITY_LABELS[member.seniority]} <span className="text-graphite-600">·</span>{' '}
+          <span className="tabular-nums">${member.cost}/hr</span>
+        </p>
+      </div>
+      <button
+        onClick={() => onRemove(member.id)}
+        aria-label={`Remover ${member.name} do squad`}
+        className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-graphite-400 transition-colors duration-150 hover:bg-graphite-800 hover:text-rust-400 focus:outline-none focus:ring-2 focus:ring-rust-400"
+      >
+        ×
+      </button>
+    </div>
+  )
+}
 
 export default function SquadPanel() {
   const { members, count, isFull, removeMember, editingSquadName } = useSquad()
 
   return (
-    <aside className="flex flex-col rounded-xl border border-gray-200 bg-white shadow-sm lg:sticky lg:top-8 lg:self-start">
-      <div className="border-b border-gray-200 px-4 py-3">
-        <h2 className="font-semibold text-gray-900">
-          Squad: {editingSquadName ?? '...'}
+    <aside className="flex flex-col bg-graphite-700 text-graphite-50 lg:sticky lg:top-8 lg:self-start">
+      <div className="px-5 pb-4 pt-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rust-400">
+          {editingSquadName ? 'Editando' : 'Novo squad'}
+        </p>
+        <h2 className="mt-1 font-display text-2xl font-semibold text-graphite-50">
+          {editingSquadName ?? 'Sem título'}
         </h2>
-        <p
-          className={`mt-0.5 text-sm font-semibold ${
-            isFull ? 'text-amber-600' : 'text-gray-500'
-          }`}
-        >
-          {isFull
-            ? `Squad completo! (${count}/${MAX_SQUAD_SIZE})`
-            : `${count}/${MAX_SQUAD_SIZE} membros`}
+
+        <div className="mt-4 flex items-center gap-2" aria-hidden="true">
+          {Array.from({ length: MAX_SQUAD_SIZE }).map((_, i) => (
+            <span
+              key={i}
+              className={`h-1 flex-1 rounded-full ${
+                i < count ? (isFull ? 'bg-rust-400' : 'bg-graphite-50') : 'bg-graphite-600'
+              }`}
+            />
+          ))}
+        </div>
+        <p className="mt-2 text-xs tabular-nums text-graphite-400">
+          {isFull ? `Squad completo — ${count}/${MAX_SQUAD_SIZE}` : `${count} de ${MAX_SQUAD_SIZE} membros`}
         </p>
       </div>
 
-      <div className="flex-1 p-4">
+      <div className="flex-1 px-5">
         {count === 0 ? (
-          <div className="flex flex-col items-center justify-center py-8 text-center">
-            <svg
-              className="h-10 w-10 text-gray-300"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
-              />
-            </svg>
-            <p className="mt-3 text-sm text-gray-500">
-              Nenhum membro selecionado.
+          <div className="border-t border-graphite-600 py-10 text-center">
+            <p className="text-sm text-graphite-200">
+              Seu squad começa aqui.
             </p>
-            <p className="mt-1 text-xs text-gray-400">
-              Adicione desenvolvedores do catálogo.
+            <p className="mt-1 text-xs text-graphite-400">
+              Clique em &ldquo;Adicionar&rdquo; em qualquer perfil do catálogo.
             </p>
           </div>
         ) : (
-          <ul role="list" className="space-y-2">
-            {members.map((m) => (
+          <ul role="list" className="divide-y divide-graphite-600 border-t border-graphite-600">
+            {members.map((m, i) => (
               <li key={m.id} role="listitem">
-                <SquadMemberCard member={m} onRemove={removeMember} />
+                <RosterRow member={m} index={i} onRemove={removeMember} />
               </li>
             ))}
           </ul>
@@ -62,7 +106,7 @@ export default function SquadPanel() {
       </div>
 
       {count > 0 && (
-        <div className="border-t border-gray-100 p-4 space-y-3">
+        <div className="space-y-4 px-5 pb-5 pt-4">
           <MetricsPanel />
           <SaveSquadButton />
         </div>

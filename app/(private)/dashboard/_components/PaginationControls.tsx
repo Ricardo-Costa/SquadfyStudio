@@ -18,25 +18,25 @@ export default function PaginationControls({
   if (totalPages <= 1) return null
 
   return (
-    <div className="flex items-center justify-center gap-4 pt-2">
+    <div className="flex items-center justify-between border-t border-ink-200 pt-4">
       <button
         type="button"
         onClick={onPrevious}
         disabled={!hasPrevious}
-        className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+        className="text-sm font-medium text-ink-600 transition-colors hover:text-rust-600 disabled:cursor-not-allowed disabled:text-ink-300 disabled:hover:text-ink-300"
       >
-        Previous
+        ← Previous
       </button>
-      <span className="text-sm text-gray-600">
-        Page {currentPage} of {totalPages}
+      <span className="text-xs tabular-nums tracking-wide text-ink-400">
+        {currentPage} / {totalPages}
       </span>
       <button
         type="button"
         onClick={onNext}
         disabled={!hasNext}
-        className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+        className="text-sm font-medium text-ink-600 transition-colors hover:text-rust-600 disabled:cursor-not-allowed disabled:text-ink-300 disabled:hover:text-ink-300"
       >
-        Next
+        Next →
       </button>
     </div>
   )

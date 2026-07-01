@@ -40,8 +40,8 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
 
   if (!data) {
     return (
-      <aside className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-8 text-center shadow-sm lg:sticky lg:top-8 lg:self-start">
-        <p className="text-sm text-gray-500">Selecione um squad para ver detalhes.</p>
+      <aside className="flex flex-col items-center justify-center border-t-2 border-ink-200 bg-ink-25 p-8 text-center lg:sticky lg:top-8 lg:self-start">
+        <p className="text-sm text-ink-500">Selecione um squad para ver detalhes.</p>
       </aside>
     )
   }
@@ -49,56 +49,56 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
   const { squad, displayName, totalCost, avgSeniority, skillCoverage } = data
 
   return (
-    <aside className="flex flex-col rounded-xl border border-gray-200 bg-white shadow-sm lg:sticky lg:top-8 lg:self-start">
-      <div className="flex items-start justify-between border-b border-gray-200 px-4 py-3">
-        <h2 className="font-semibold text-gray-900">{displayName}</h2>
+    <aside className="flex flex-col bg-graphite-700 text-graphite-50 lg:sticky lg:top-8 lg:self-start">
+      <div className="flex items-start justify-between px-5 pb-4 pt-5">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rust-400">
+            Squad
+          </p>
+          <h2 className="mt-1 font-display text-2xl font-semibold text-graphite-50">
+            {displayName}
+          </h2>
+        </div>
         <button
           type="button"
           onClick={onClose}
           aria-label="Fechar detalhes"
-          className="rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+          className="rounded-full p-1 text-graphite-400 hover:bg-graphite-800 hover:text-graphite-50"
         >
           ×
         </button>
       </div>
 
-      <div className="p-4 space-y-4">
-        <div className="grid grid-cols-3 gap-2">
-          <div className="rounded-lg bg-gray-50 p-2 text-center">
-            <p className="text-xs text-gray-500">Custo/hr</p>
-            <p className="mt-0.5 text-sm font-bold text-gray-900">${totalCost}</p>
+      <div className="space-y-5 px-5 pb-5">
+        <div className="flex items-baseline divide-x divide-graphite-600 border-y border-graphite-600 py-4">
+          <div className="flex-1 pr-3">
+            <p className="font-display text-2xl font-semibold tabular-nums text-graphite-50">${totalCost}</p>
+            <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Custo/hr</p>
           </div>
-          <div className="rounded-lg bg-gray-50 p-2 text-center">
-            <p className="text-xs text-gray-500">Seniority</p>
-            <p className="mt-0.5 text-sm font-bold text-gray-900">
+          <div className="flex-1 px-3">
+            <p className="font-display text-2xl font-semibold text-graphite-50">
               {avgSeniority ? SENIORITY_LABELS[avgSeniority] : '—'}
             </p>
+            <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Seniority</p>
           </div>
-          <div className="rounded-lg bg-gray-50 p-2 text-center">
-            <p className="text-xs text-gray-500">Skills</p>
-            <p className="mt-0.5 text-sm font-bold text-gray-900">{skillCoverage.length}</p>
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-500">Skills</h3>
-          <div className="mt-2 flex flex-wrap gap-1">
-            {skillCoverage.map((skill) => (
-              <span
-                key={skill}
-                className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600"
-              >
-                {skill}
-              </span>
-            ))}
+          <div className="flex-1 pl-3">
+            <p className="font-display text-2xl font-semibold tabular-nums text-graphite-50">{skillCoverage.length}</p>
+            <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Skills</p>
           </div>
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-graphite-400">Skills</h3>
+          <p className="mt-2 text-xs leading-relaxed text-graphite-200">
+            {skillCoverage.join(' · ')}
+          </p>
+        </div>
+
+        <div>
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-graphite-400">
             Membros ({squad.members.length})
           </h3>
-          <ul role="list" className="mt-2 space-y-2">
+          <ul role="list" className="mt-1 divide-y divide-graphite-600">
             {squad.members.map((member) => (
               <li key={member.id} role="listitem">
                 <SquadMemberCard member={member} />
@@ -110,7 +110,7 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
         <button
           type="button"
           onClick={handleEdit}
-          className="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+          className="w-full rounded-full bg-rust-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-rust-400"
         >
           Editar
         </button>

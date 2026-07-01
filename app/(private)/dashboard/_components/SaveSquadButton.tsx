@@ -52,15 +52,15 @@ export default function SaveSquadButton() {
 
   let label = 'Salvar Squad'
   let colorClass = isEmpty
-    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-    : 'bg-blue-600 text-white hover:bg-blue-700'
+    ? 'bg-graphite-800 text-graphite-400 cursor-not-allowed'
+    : 'bg-rust-500 text-white hover:bg-rust-400'
 
   if (saveState === 'loading') {
-    label = 'Salvando...'
-    colorClass = 'bg-blue-400 text-white cursor-not-allowed'
+    label = 'Salvando…'
+    colorClass = 'bg-rust-700 text-ink-200 cursor-not-allowed'
   } else if (saveState === 'error') {
     label = 'Erro ao salvar'
-    colorClass = 'bg-red-600 text-white hover:bg-red-700'
+    colorClass = 'bg-red-700 text-white hover:bg-red-600'
   }
 
   return (
@@ -69,7 +69,7 @@ export default function SaveSquadButton() {
         type="button"
         onClick={handleOpenModal}
         disabled={isDisabled}
-        className={`w-full rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${colorClass}`}
+        className={`w-full rounded-full px-4 py-2.5 text-sm font-semibold transition-colors ${colorClass}`}
       >
         {label}
       </button>
