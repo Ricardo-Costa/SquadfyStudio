@@ -14,9 +14,17 @@ const SENIORITY_LABELS: Record<Developer['seniority'], string> = {
 
 interface DeveloperCardProps {
   developer: Developer
+  isInSquad?: boolean
+  isFull?: boolean
+  onAdd?: (dev: Developer) => void
 }
 
-export default function DeveloperCard({ developer }: DeveloperCardProps) {
+export default function DeveloperCard({
+  developer,
+  isInSquad = false,
+  isFull = false,
+  onAdd,
+}: DeveloperCardProps) {
   const { name, avatar, seniority, cost, skills } = developer
 
   function handleAvatarError(e: React.SyntheticEvent<HTMLImageElement>) {
@@ -57,6 +65,31 @@ export default function DeveloperCard({ developer }: DeveloperCardProps) {
             {skill}
           </span>
         ))}
+      </div>
+
+      <div className="mt-4">
+        {isInSquad ? (
+          <span className="inline-flex w-full items-center justify-center rounded-lg bg-emerald-100 px-3 py-1.5 text-sm font-medium text-emerald-700">
+            ✓ No Squad
+          </span>
+        ) : isFull ? (
+          <button
+            disabled
+            aria-disabled="true"
+            aria-label="Adicionar ao squad"
+            className="w-full cursor-not-allowed rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-400 opacity-50"
+          >
+            Adicionar
+          </button>
+        ) : (
+          <button
+            onClick={() => onAdd?.(developer)}
+            aria-label="Adicionar ao squad"
+            className="w-full rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Adicionar
+          </button>
+        )}
       </div>
     </div>
   )

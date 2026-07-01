@@ -6,11 +6,17 @@ interface CatalogueGridProps {
   isLoading: boolean
   isError: boolean
   onRetry: () => void
+  isMember?: (id: string) => boolean
+  isFull?: boolean
+  onAdd?: (dev: Developer) => void
 }
 
 function SkeletonCard() {
   return (
-    <div className="flex flex-col rounded-xl border border-gray-200 bg-white p-4 shadow-sm" aria-hidden="true">
+    <div
+      className="flex flex-col rounded-xl border border-gray-200 bg-white p-4 shadow-sm"
+      aria-hidden="true"
+    >
       <div className="flex items-center gap-3">
         <div className="h-12 w-12 animate-pulse rounded-full bg-gray-200" />
         <div className="flex-1 space-y-2">
@@ -33,10 +39,16 @@ export default function CatalogueGrid({
   isLoading,
   isError,
   onRetry,
+  isMember,
+  isFull = false,
+  onAdd,
 }: CatalogueGridProps) {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-busy="true">
+      <div
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        aria-busy="true"
+      >
         {Array.from({ length: 8 }).map((_, i) => (
           <SkeletonCard key={i} />
         ))}
@@ -79,7 +91,13 @@ export default function CatalogueGrid({
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {developers.map((dev) => (
-        <DeveloperCard key={dev.id} developer={dev} />
+        <DeveloperCard
+          key={dev.id}
+          developer={dev}
+          isInSquad={isMember?.(dev.id) ?? false}
+          isFull={isFull}
+          onAdd={onAdd}
+        />
       ))}
     </div>
   )
