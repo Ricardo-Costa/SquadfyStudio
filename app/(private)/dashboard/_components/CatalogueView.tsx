@@ -2,12 +2,14 @@
 
 import { useMemo, useState } from 'react'
 import { useDevelopers } from '@/hooks/useDevelopers'
+import { useSquad } from '@/hooks/useSquad'
 import type { FilterState, Seniority } from '@/lib/types'
 import CatalogueGrid from './CatalogueGrid'
 import FilterBar from './FilterBar'
 
 export default function CatalogueView() {
   const { data: developers = [], isLoading, isError, refetch } = useDevelopers()
+  const { isFull, isMember, addMember } = useSquad()
 
   const [filterState, setFilterState] = useState<FilterState>({
     name: '',
@@ -56,6 +58,9 @@ export default function CatalogueView() {
         isLoading={isLoading}
         isError={isError}
         onRetry={refetch}
+        isMember={isMember}
+        isFull={isFull}
+        onAdd={addMember}
       />
     </div>
   )

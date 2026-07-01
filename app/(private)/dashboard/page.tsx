@@ -1,4 +1,5 @@
 import CatalogueView from './_components/CatalogueView'
+import SquadPanel from './_components/SquadPanel'
 
 export default function DashboardPage() {
   return (
@@ -7,7 +8,10 @@ export default function DashboardPage() {
         <h1 className="mb-6 text-2xl font-bold text-gray-900">
           Developer Catalogue
         </h1>
-        <CatalogueView />
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_340px]">
+          <CatalogueView />
+          <SquadPanel />
+        </div>
       </div>
     </main>
   )
