@@ -18,6 +18,7 @@ export function useSquad() {
     removeMember: (id: string) => dispatch({ type: 'REMOVE_MEMBER', payload: id }),
     editingSquadId: state.editingSquadId,
     editingSquadName: state.editingSquadName,
+    isDirty: state.isDirty,
     loadSquad: (id: number, name: string, members: Developer[]) =>
       dispatch({ type: 'LOAD_SQUAD', payload: { id, name, members } }),
     resetSquad: () => dispatch({ type: 'RESET_SQUAD' }),

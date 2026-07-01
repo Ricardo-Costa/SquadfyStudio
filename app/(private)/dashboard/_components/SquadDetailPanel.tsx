@@ -20,7 +20,7 @@ interface SquadDetailPanelProps {
 
 export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProps) {
   const router = useRouter()
-  const { count, editingSquadId } = useSquad()
+  const { editingSquadId, isDirty } = useSquad()
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
   function proceedToEdit() {
@@ -31,7 +31,7 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
   function handleEdit() {
     if (!data) return
     const isSameSquad = editingSquadId === data.squad.id
-    if (count > 0 && !isSameSquad) {
+    if (isDirty && !isSameSquad) {
       setIsConfirmOpen(true)
       return
     }
