@@ -7,22 +7,15 @@ import { useSquad } from '@/hooks/useSquad'
 import { saveSquad } from '@/app/(private)/dashboard/actions'
 import SaveSquadModal from './SaveSquadModal'
 
-type SaveState = 'idle' | 'loading' | 'success' | 'error'
+type SaveState = 'idle' | 'loading' | 'error'
 
 export default function SaveSquadButton() {
-  const { members, editingSquadId, editingSquadName } = useSquad()
+  const { members, editingSquadId, editingSquadName, loadSquad } = useSquad()
   const queryClient = useQueryClient()
   const router = useRouter()
   const [saveState, setSaveState] = useState<SaveState>('idle')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  useEffect(() => {
-    if (saveState === 'success') {
-      if (timerRef.current) clearTimeout(timerRef.current)
-      setSaveState('idle')
-    }
-  }, [members]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     return () => {
@@ -38,16 +31,15 @@ export default function SaveSquadButton() {
   async function handleConfirm(name: string) {
     setIsModalOpen(false)
     setSaveState('loading')
-    const isNewSquad = !editingSquadId
     try {
-      await saveSquad(name, members, editingSquadId ?? undefined)
+      const saved = await saveSquad(name, members, editingSquadId ?? undefined)
       queryClient.invalidateQueries({ queryKey: ['squads'] })
-      if (isNewSquad) {
-        router.push('/dashboard/squads')
-        return
-      }
-      setSaveState('success')
-      timerRef.current = setTimeout(() => setSaveState('idle'), 2000)
+      // Associate the builder with the squad it just became (create or edit),
+      // so re-opening "Editar" on this exact squad later doesn't falsely warn
+      // about "unsaved" members (editingSquadId would otherwise never reflect
+      // a freshly created squad).
+      loadSquad(saved.id, saved.name ?? name, members)
+      router.push('/dashboard/squads')
     } catch {
       setSaveState('error')
       timerRef.current = setTimeout(() => setSaveState('idle'), 3000)
@@ -55,7 +47,7 @@ export default function SaveSquadButton() {
   }
 
   const isEmpty = members.length === 0
-  const isDisabled = isEmpty || saveState === 'loading' || saveState === 'success'
+  const isDisabled = isEmpty || saveState === 'loading'
 
   let label = 'Salvar Squad'
   let colorClass = isEmpty
@@ -65,9 +57,6 @@ export default function SaveSquadButton() {
   if (saveState === 'loading') {
     label = 'Salvando...'
     colorClass = 'bg-blue-400 text-white cursor-not-allowed'
-  } else if (saveState === 'success') {
-    label = 'Salvo ✓'
-    colorClass = 'bg-green-600 text-white cursor-not-allowed'
   } else if (saveState === 'error') {
     label = 'Erro ao salvar'
     colorClass = 'bg-red-600 text-white hover:bg-red-700'
