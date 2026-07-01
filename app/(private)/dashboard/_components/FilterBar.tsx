@@ -25,6 +25,8 @@ interface FilterBarProps {
   onNameChange: (value: string) => void
   seniorities: Seniority[]
   onSeniorityToggle: (level: Seniority) => void
+  placeholder?: string
+  ariaLabel?: string
 }
 
 export default function FilterBar({
@@ -32,6 +34,8 @@ export default function FilterBar({
   onNameChange,
   seniorities,
   onSeniorityToggle,
+  placeholder = 'Buscar desenvolvedor...',
+  ariaLabel = 'Search developers',
 }: FilterBarProps) {
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -55,8 +59,8 @@ export default function FilterBar({
           type="text"
           value={name}
           onChange={(e) => onNameChange(e.target.value)}
-          placeholder="Buscar desenvolvedor..."
-          aria-label="Search developers"
+          placeholder={placeholder}
+          aria-label={ariaLabel}
           className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-9 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
