@@ -2,8 +2,8 @@
 
 import { cookies, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { signToken } from '@/lib/auth'
-import { checkRateLimit, recordFailedAttempt, resetAttempts } from '@/lib/rate-limit'
+import { signToken } from '@/lib/auth/auth'
+import { checkRateLimit, recordFailedAttempt, resetAttempts } from '@/lib/auth/rate-limit'
 
 type LoginErrorCode = 'invalid_credentials' | 'rate_limited' | 'server_error'
 

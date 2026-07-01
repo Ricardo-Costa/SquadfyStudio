@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSquads } from '@/hooks/useSquads'
 import { useSquad } from '@/hooks/useSquad'
-import { formatSquadName } from '@/lib/squads'
+import { formatSquadName } from '@/lib/squad/squads'
 import ConfirmDialog from './ConfirmDialog'
 
 interface SquadEditLoaderProps {

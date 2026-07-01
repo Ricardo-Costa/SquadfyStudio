@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { paginate } from '@/lib/pagination'
+import { paginate } from '@/lib/squad/pagination'
 
 export function usePagination<T>(items: T[], pageSize: number) {
   const [page, setPage] = useState(1)
