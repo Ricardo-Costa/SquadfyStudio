@@ -122,5 +122,5 @@ Fixed credentials for login (define in env or hardcode in the server action for 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
 shell commands, and other important information, read the current plan at
-`specs/003-squad-builder/plan.md`
+`specs/004-metrics-persistence/plan.md`
 <!-- SPECKIT END -->
