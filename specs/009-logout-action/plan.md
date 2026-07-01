@@ -1,0 +1,127 @@
+# Implementation Plan: Logout Action
+
+**Branch**: `009-logout-action` | **Date**: 2026-07-01 | **Spec**: [spec.md](spec.md)
+
+**Input**: Feature specification from `specs/009-logout-action/spec.md`
+
+---
+
+## Summary
+
+Add a `logout` Server Action that deletes the `auth-token` HttpOnly cookie and redirects to
+`/login`, and a small `LogoutButton` client component (a plain `<form action={logout}>` wrapping
+a submit button, mirroring the existing `LoginForm`/`SubmitButton` pattern) rendered in a new
+slim top-right bar above page content in `app/(private)/dashboard/layout.tsx` — the one layout
+that already wraps every private route. No new state, no new dependency; the existing middleware
+(`middleware.ts`) already redirects any cookie-less request to `/login`, so deleting the cookie is
+sufficient to make User Story 2 (session cannot be reused) true with zero additional code.
+
+---
+
+## Technical Context
+
+**Language/Version**: TypeScript 5.8, strict mode
+
+**Primary Dependencies**:
+- `next@^15.3.4` — Server Actions (`'use server'`), `next/headers` `cookies()`, `next/navigation`
+  `redirect()` — the exact same APIs `app/(auth)/login/actions.ts` already uses for the inverse
+  operation (setting the cookie / redirecting to `/dashboard`).
+
+**No new npm packages.**
+
+**Storage**: N/A — no persisted data; this feature only deletes the existing `auth-token` cookie
+set by `001-server-action-auth`.
+
+**Testing**: No new pure/`lib/` function is introduced (unlike `lib/metrics.ts` or
+`lib/pagination.ts`), so there is nothing here that fits the project's established
+Jest-unit-test-for-pure-functions pattern. The Server Action's behavior (cookie deletion +
+redirect) is verified manually per `quickstart.md`, consistent with how `001-server-action-auth`'s
+own login Server Action and `middleware.ts` are verified today (no existing Jest coverage for
+either).
+
+**Target Platform**: Browser, Next.js App Router (Node.js runtime for the Server Action;
+`middleware.ts` remains Edge runtime and is unmodified).
+
+**Performance Goals**:
+- SC-001 (session ends and login page reached in one interaction): trivially met — a single
+  Server Action round-trip (cookie delete + redirect), same cost class as the existing login
+  Server Action.
+
+**Constraints**:
+- Logout MUST be a Server Action per Constitution Principle I (all authentication handled
+  server-side, credential stored/cleared only via HttpOnly cookie) — no client-side
+  `document.cookie` manipulation.
+- No confirmation dialog (spec Assumptions) — the control is a direct-trigger form submit, not
+  gated behind `ConfirmDialog`.
+- Reuses `middleware.ts`'s existing "no token → redirect to `/login`" behavior for FR-005 instead
+  of adding new route-protection logic — deleting the cookie is the entire enforcement mechanism.
+
+**Scale/Scope**: 1 new Server Action (`logout`), 1 new small client component (`LogoutButton`), 1
+updated layout file (`app/(private)/dashboard/layout.tsx`) to place it. No changes to
+`middleware.ts`, `lib/auth.ts`, `DashboardNav.tsx`, or any squad/catalogue file.
+
+---
+
+## Constitution Check
+
+*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+
+| Principle | Gate | Status | Notes |
+|-----------|------|--------|-------|
+| I. Server-Side Auth | Auth-affecting operation MUST be a Server Action; credential MUST live only in an HttpOnly cookie | ✅ PASS | `logout` is a `'use server'` function that deletes the HttpOnly `auth-token` cookie server-side; no client-side token handling introduced |
+| II. State Management Split | No new server/client state category introduced | ✅ PASS | N/A — `LogoutButton` holds no state; not squad composition, not catalogue data |
+| III. Optimized Rendering | No new expensive computation | ✅ PASS | N/A — no metrics or derived calculations involved |
+| IV. Feature-Driven Delivery | Builds on `001-server-action-auth`; Server Action pattern already established for the inverse (login) operation | ✅ PASS | Reuses `cookies()`/`redirect()` exactly as `login()` already does |
+| V. Simplicity Over Abstraction | No new abstraction beyond what's needed | ✅ PASS | Single function, single component, one-line layout change; no new dependency; enforcement reuses existing middleware rather than duplicating route-protection logic |
+
+**All gates pass. No Complexity Tracking entries required.**
+
+---
+
+## Project Structure
+
+### Documentation (this feature)
+
+```text
+specs/009-logout-action/
+├── plan.md              ← this file
+├── research.md          ← Phase 0 decisions (form-action pattern, cookie deletion, placement)
+├── data-model.md         ← Phase 1 — confirms no new entities/state
+├── quickstart.md        ← manual verification checklist (US1, US2)
+├── contracts/
+│   └── logout.md        ← logout() Server Action + LogoutButton contract
+├── checklists/
+│   └── requirements.md  ← spec quality checklist (all pass)
+└── tasks.md              ← generated by /speckit-tasks (not yet created)
+```
+
+### Source Code
+
+```text
+app/(private)/
+  actions.ts                              # NEW — 'use server'; logout(): deletes auth-token cookie, redirect('/login')
+
+app/(private)/dashboard/_components/
+  LogoutButton.tsx                        # NEW — <form action={logout}><button>Sair</button></form>, mirrors SubmitButton's pending/label pattern
+
+app/(private)/dashboard/
+  layout.tsx                              # UPDATED — adds a slim top-right bar above {children} rendering <LogoutButton />, alongside the existing <DashboardNav />
+```
+
+No changes to `middleware.ts`, `lib/auth.ts`, `app/(auth)/login/**`, `DashboardNav.tsx`, or any
+squad/catalogue/metrics file.
+
+**Structure Decision**: Single Next.js App Router project (existing structure). `logout` lives in
+a new `app/(private)/actions.ts` — sibling to the `(private)` route group's own `layout.tsx` —
+rather than inside `app/(private)/dashboard/actions.ts` (which is specifically the squad-persistence
+Server Action file, a different concern) or inside `app/(auth)/login/actions.ts` (a different route
+group, would create an awkward cross-route-group import into a client component under `(private)`).
+The logout control is placed in a new slim bar in `dashboard/layout.tsx` rather than folded into
+`DashboardNav.tsx`'s existing sidebar/mobile-bar markup, keeping "primary navigation" (`DashboardNav`)
+and "session control" (the new bar) as separate single-responsibility pieces — and because
+`DashboardNav`'s sidebar is left-aligned on desktop, so a control required to be in the *top-right*
+corner cannot literally live inside it there.
+
+## Complexity Tracking
+
+*No violations — table intentionally omitted.*
