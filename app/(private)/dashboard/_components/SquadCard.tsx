@@ -1,10 +1,4 @@
-import type { SquadCardData } from '@/lib/types'
-
-const SENIORITY_LABELS = {
-  junior: 'Junior',
-  mid: 'Mid',
-  senior: 'Senior',
-}
+import { type SquadCardData, SENIORITY_LABELS } from '@/lib/types'
 
 interface SquadCardProps {
   data: SquadCardData

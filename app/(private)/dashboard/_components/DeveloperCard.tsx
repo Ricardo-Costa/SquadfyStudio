@@ -1,15 +1,9 @@
-import type { Developer } from '@/lib/types'
+import { type Developer, SENIORITY_LABELS } from '@/lib/types'
 
 const SENIORITY_DOT: Record<Developer['seniority'], string> = {
   junior: 'bg-seniority-junior',
   mid: 'bg-seniority-mid',
   senior: 'bg-seniority-senior',
-}
-
-const SENIORITY_LABELS: Record<Developer['seniority'], string> = {
-  junior: 'Junior',
-  mid: 'Mid',
-  senior: 'Senior',
 }
 
 interface DeveloperCardProps {

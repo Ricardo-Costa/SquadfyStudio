@@ -1,10 +1,4 @@
-import type { Developer } from '@/lib/types'
-
-const SENIORITY_LABELS: Record<Developer['seniority'], string> = {
-  junior: 'Junior',
-  mid: 'Mid',
-  senior: 'Senior',
-}
+import { type Developer, SENIORITY_LABELS } from '@/lib/types'
 
 interface SquadMemberCardProps {
   member: Developer

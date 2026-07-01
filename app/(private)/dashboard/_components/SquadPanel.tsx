@@ -1,16 +1,10 @@
 'use client'
 
-import type { Developer } from '@/lib/types'
+import { type Developer, SENIORITY_LABELS } from '@/lib/types'
 import { useSquad } from '@/hooks/useSquad'
 import { MAX_SQUAD_SIZE } from '@/lib/config'
 import MetricsPanel from './MetricsPanel'
 import SaveSquadButton from './SaveSquadButton'
-
-const SENIORITY_LABELS: Record<Developer['seniority'], string> = {
-  junior: 'Junior',
-  mid: 'Mid',
-  senior: 'Senior',
-}
 
 interface RosterRowProps {
   member: Developer
