@@ -6,12 +6,14 @@ import MetricsPanel from './MetricsPanel'
 import SaveSquadButton from './SaveSquadButton'
 
 export default function SquadPanel() {
-  const { members, count, isFull, removeMember } = useSquad()
+  const { members, count, isFull, removeMember, editingSquadName } = useSquad()
 
   return (
     <aside className="flex flex-col rounded-xl border border-gray-200 bg-white shadow-sm lg:sticky lg:top-8 lg:self-start">
       <div className="border-b border-gray-200 px-4 py-3">
-        <h2 className="font-semibold text-gray-900">Meu Squad</h2>
+        <h2 className="font-semibold text-gray-900">
+          Squad: {editingSquadName ?? '...'}
+        </h2>
         <p
           className={`mt-0.5 text-sm font-semibold ${
             isFull ? 'text-amber-600' : 'text-gray-500'
