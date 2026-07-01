@@ -3,12 +3,14 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSquad } from '@/hooks/useSquad'
 import { saveSquad } from '@/app/(private)/dashboard/actions'
+import SaveSquadModal from './SaveSquadModal'
 
 type SaveState = 'idle' | 'loading' | 'success' | 'error'
 
 export default function SaveSquadButton() {
   const { members } = useSquad()
   const [saveState, setSaveState] = useState<SaveState>('idle')
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
@@ -24,11 +26,16 @@ export default function SaveSquadButton() {
     }
   }, [])
 
-  async function handleSave() {
+  function handleOpenModal() {
     if (members.length === 0 || saveState === 'loading') return
+    setIsModalOpen(true)
+  }
+
+  async function handleConfirm(name: string) {
+    setIsModalOpen(false)
     setSaveState('loading')
     try {
-      await saveSquad(members)
+      await saveSquad(name, members)
       setSaveState('success')
       timerRef.current = setTimeout(() => setSaveState('idle'), 2000)
     } catch {
@@ -57,13 +64,20 @@ export default function SaveSquadButton() {
   }
 
   return (
-    <button
-      type="button"
-      onClick={handleSave}
-      disabled={isDisabled}
-      className={`w-full rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${colorClass}`}
-    >
-      {label}
-    </button>
+    <>
+      <button
+        type="button"
+        onClick={handleOpenModal}
+        disabled={isDisabled}
+        className={`w-full rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${colorClass}`}
+      >
+        {label}
+      </button>
+      <SaveSquadModal
+        isOpen={isModalOpen}
+        onConfirm={handleConfirm}
+        onCancel={() => setIsModalOpen(false)}
+      />
+    </>
   )
 }

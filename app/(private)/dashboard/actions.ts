@@ -1,19 +1,14 @@
 'use server'
 
-import type { Developer } from '@/lib/types'
+import type { Developer, SavedSquad } from '@/lib/types'
 
-export interface SavedSquad {
-  id: number
-  savedAt: string
-  members: Developer[]
-}
-
-export async function saveSquad(members: Developer[]): Promise<SavedSquad> {
+export async function saveSquad(name: string, members: Developer[]): Promise<SavedSquad> {
+  if (!name.trim()) throw new Error('Squad name is required')
   if (members.length === 0) throw new Error('Cannot save empty squad')
   const res = await fetch('http://localhost:3001/squads', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ savedAt: new Date().toISOString(), members }),
+    body: JSON.stringify({ name, savedAt: new Date().toISOString(), members }),
   })
   if (!res.ok) throw new Error('Failed to save squad')
   return res.json() as Promise<SavedSquad>
