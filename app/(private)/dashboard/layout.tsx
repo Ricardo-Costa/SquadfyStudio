@@ -1,18 +1,22 @@
+import { cookies } from 'next/headers'
+import { verifyToken } from '@/lib/auth/auth'
 import DashboardNav from './_components/DashboardNav'
-import LogoutButton from './_components/LogoutButton'
+import DashboardTopbar from './_components/DashboardTopbar'
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('auth-token')?.value
+  const payload = token ? await verifyToken(token) : null
+
   return (
     <div className="lg:flex">
       <DashboardNav />
       <div className="flex-1">
-        <div className="flex justify-end px-4 py-3 sm:px-6 lg:px-10">
-          <LogoutButton />
-        </div>
+        <DashboardTopbar email={payload?.sub ?? null} />
         {children}
       </div>
     </div>
