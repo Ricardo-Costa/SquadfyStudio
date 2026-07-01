@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers'
-import { verifyToken } from '@/lib/auth'
+import { verifyToken } from '@/lib/auth/auth'
 import DashboardNav from './_components/DashboardNav'
 import DashboardTopbar from './_components/DashboardTopbar'
 

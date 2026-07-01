@@ -16,3 +16,9 @@ export const SAVE_ERROR_RESET_MS = 3000
 
 /** Max characters shown for the logged-in email in the topbar before truncating with "…". */
 export const EMAIL_DISPLAY_MAX_LENGTH = 24
+
+/** Failed login attempts allowed before an IP is temporarily blocked. */
+export const RATE_LIMIT_MAX_ATTEMPTS = 5
+
+/** How long an IP stays blocked after exceeding RATE_LIMIT_MAX_ATTEMPTS (ms). */
+export const RATE_LIMIT_BLOCK_DURATION_MS = 15 * 60 * 1000

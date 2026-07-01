@@ -1,5 +1,4 @@
-const MAX_ATTEMPTS = 5
-const BLOCK_DURATION_MS = 15 * 60 * 1000
+import { RATE_LIMIT_MAX_ATTEMPTS, RATE_LIMIT_BLOCK_DURATION_MS } from '@/lib/config'
 
 interface RateLimitEntry {
   count: number
@@ -29,7 +28,7 @@ export function recordFailedAttempt(ip: string): void {
 
   store.set(ip, {
     count: newCount,
-    blockedUntil: newCount >= MAX_ATTEMPTS ? Date.now() + BLOCK_DURATION_MS : null,
+    blockedUntil: newCount >= RATE_LIMIT_MAX_ATTEMPTS ? Date.now() + RATE_LIMIT_BLOCK_DURATION_MS : null,
   })
 }
 

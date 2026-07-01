@@ -1,4 +1,4 @@
-import type { Developer, Seniority } from './types'
+import type { Developer, Seniority } from '../types'
 
 const SENIORITY_SCORE: Record<Seniority, number> = {
   junior: 1,

@@ -103,8 +103,15 @@ context/
 hooks/
   useSquad.ts
 lib/
-  metrics.ts         # pure functions (tested with Jest)
-  auth.ts            # token generation/validation
+  config.ts          # central constants (page size, limits, timeouts, URLs)
+  types.ts           # shared TypeScript types
+  auth/
+    auth.ts          # token generation/validation
+    rate-limit.ts    # login attempt rate limiting
+  squad/
+    metrics.ts       # pure functions (tested with Jest)
+    squads.ts        # squad display helpers
+    pagination.ts    # catalogue/squads grid pagination
 ```
 
 ## Credential Fixture

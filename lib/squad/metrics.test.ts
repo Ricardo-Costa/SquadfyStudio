@@ -1,5 +1,5 @@
 import { calcTotalCost, calcAvgSeniority, calcSkillCoverage } from './metrics'
-import type { Developer } from './types'
+import type { Developer } from '../types'
 
 const dev = (overrides: Partial<Developer>): Developer => ({
   id: '1',
