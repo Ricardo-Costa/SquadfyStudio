@@ -7,6 +7,7 @@ import { formatSquadName } from '@/lib/squads'
 import type { FilterState, Seniority, SquadCardData } from '@/lib/types'
 import FilterBar from './FilterBar'
 import SquadCard from './SquadCard'
+import SquadDetailPanel from './SquadDetailPanel'
 
 function SkeletonCard() {
   return (
@@ -31,12 +32,14 @@ function SquadsGrid({
   onRetry,
   squadsExist,
   filtered,
+  onSelect,
 }: {
   isLoading: boolean
   isError: boolean
   onRetry: () => void
   squadsExist: boolean
   filtered: SquadCardData[]
+  onSelect: (id: number) => void
 }) {
   if (isLoading) {
     return (
@@ -93,7 +96,7 @@ function SquadsGrid({
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {filtered.map((data) => (
-        <SquadCard key={data.squad.id} data={data} />
+        <SquadCard key={data.squad.id} data={data} onClick={() => onSelect(data.squad.id)} />
       ))}
     </div>
   )
@@ -106,6 +109,8 @@ export default function SquadsView() {
     name: '',
     seniorities: [],
   })
+
+  const [selectedSquadId, setSelectedSquadId] = useState<number | null>(null)
 
   const enriched = useMemo<SquadCardData[]>(
     () =>
@@ -148,23 +153,33 @@ export default function SquadsView() {
     }))
   }
 
+  const selected = selectedSquadId
+    ? (enriched.find((data) => data.squad.id === selectedSquadId) ?? null)
+    : null
+
   return (
-    <div className="space-y-6">
-      <FilterBar
-        name={filterState.name}
-        onNameChange={handleNameChange}
-        seniorities={filterState.seniorities}
-        onSeniorityToggle={handleSeniorityToggle}
-        placeholder="Buscar squad..."
-        ariaLabel="Search squads"
-      />
-      <SquadsGrid
-        isLoading={isLoading}
-        isError={isError}
-        onRetry={refetch}
-        squadsExist={enriched.length > 0}
-        filtered={filtered}
-      />
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_340px]">
+      <div className="order-2 space-y-6 lg:order-1">
+        <FilterBar
+          name={filterState.name}
+          onNameChange={handleNameChange}
+          seniorities={filterState.seniorities}
+          onSeniorityToggle={handleSeniorityToggle}
+          placeholder="Buscar squad..."
+          ariaLabel="Search squads"
+        />
+        <SquadsGrid
+          isLoading={isLoading}
+          isError={isError}
+          onRetry={refetch}
+          squadsExist={enriched.length > 0}
+          filtered={filtered}
+          onSelect={setSelectedSquadId}
+        />
+      </div>
+      <div className="order-1 lg:order-2">
+        <SquadDetailPanel data={selected} onClose={() => setSelectedSquadId(null)} />
+      </div>
     </div>
   )
 }

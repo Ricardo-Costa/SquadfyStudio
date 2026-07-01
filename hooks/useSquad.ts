@@ -15,5 +15,9 @@ export function useSquad() {
     isMember: (id: string) => state.members.some((m) => m.id === id),
     addMember: (dev: Developer) => dispatch({ type: 'ADD_MEMBER', payload: dev }),
     removeMember: (id: string) => dispatch({ type: 'REMOVE_MEMBER', payload: id }),
+    editingSquadId: state.editingSquadId,
+    editingSquadName: state.editingSquadName,
+    loadSquad: (id: number, name: string, members: Developer[]) =>
+      dispatch({ type: 'LOAD_SQUAD', payload: { id, name, members } }),
   }
 }

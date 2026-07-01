@@ -6,17 +6,24 @@ interface SaveSquadModalProps {
   isOpen: boolean
   onConfirm: (name: string) => void
   onCancel: () => void
+  initialName?: string
 }
 
-export default function SaveSquadModal({ isOpen, onConfirm, onCancel }: SaveSquadModalProps) {
+export default function SaveSquadModal({
+  isOpen,
+  onConfirm,
+  onCancel,
+  initialName,
+}: SaveSquadModalProps) {
   const [name, setName] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (isOpen) {
-      setName('')
+      setName(initialName ?? '')
       inputRef.current?.focus()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen])
 
   useEffect(() => {
