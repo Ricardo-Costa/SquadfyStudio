@@ -71,7 +71,7 @@ export default function SaveSquadModal({
           }}
           placeholder="Ex: Squad Alpha"
           aria-label="Nome do squad"
-          className="mt-4 w-full border-b border-ink-300 bg-transparent px-1 py-2 text-sm text-ink-900 placeholder-ink-400 focus:border-rust-500 focus:outline-none"
+          className="mt-4 w-full border-b border-ink-300 bg-transparent px-1 py-2 text-sm text-ink-900 placeholder-ink-400 focus:border-rust-500 focus:outline-none focus:ring-1 focus:ring-rust-400"
         />
         {isInvalid && (
           <p className="mt-1.5 text-xs text-red-600">O nome do squad é obrigatório.</p>

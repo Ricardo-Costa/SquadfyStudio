@@ -28,7 +28,7 @@ export default function FilterBar({
   onNameChange,
   seniorities,
   onSeniorityToggle,
-  placeholder = 'Buscar desenvolvedor...',
+  placeholder = 'Buscar desenvolvedor…',
   ariaLabel = 'Search developers',
 }: FilterBarProps) {
   return (
@@ -55,7 +55,7 @@ export default function FilterBar({
           onChange={(e) => onNameChange(e.target.value)}
           placeholder={placeholder}
           aria-label={ariaLabel}
-          className="w-full border-b border-ink-300 bg-transparent py-2 pl-6 pr-2 text-sm text-ink-900 placeholder-ink-400 focus:border-rust-500 focus:outline-none"
+          className="w-full border-b border-ink-300 bg-transparent py-2 pl-6 pr-2 text-sm text-ink-900 placeholder-ink-400 focus:border-rust-500 focus:outline-none focus:ring-1 focus:ring-rust-400"
         />
       </div>
 
@@ -68,7 +68,7 @@ export default function FilterBar({
               type="button"
               onClick={() => onSeniorityToggle(value)}
               aria-pressed={isActive}
-              className={`flex items-center gap-1.5 border-b-2 pb-1 text-sm font-medium transition-colors focus:outline-none ${
+              className={`flex items-center gap-1.5 rounded-sm border-b-2 pb-1 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-rust-400 focus-visible:ring-offset-2 ${
                 isActive
                   ? 'border-rust-500 text-ink-900'
                   : 'border-transparent text-ink-400 hover:text-ink-700'

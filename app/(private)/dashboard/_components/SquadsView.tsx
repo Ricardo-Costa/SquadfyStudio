@@ -178,7 +178,7 @@ export default function SquadsView() {
           onNameChange={handleNameChange}
           seniorities={filterState.seniorities}
           onSeniorityToggle={handleSeniorityToggle}
-          placeholder="Buscar squad..."
+          placeholder="Buscar squad…"
           ariaLabel="Search squads"
         />
         <SquadsGrid

@@ -56,7 +56,7 @@ export default function SaveSquadButton() {
     : 'bg-rust-500 text-white hover:bg-rust-400'
 
   if (saveState === 'loading') {
-    label = 'Salvando...'
+    label = 'Salvando…'
     colorClass = 'bg-rust-700 text-ink-200 cursor-not-allowed'
   } else if (saveState === 'error') {
     label = 'Erro ao salvar'

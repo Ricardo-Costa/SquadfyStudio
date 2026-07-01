@@ -23,7 +23,7 @@ export function LoginInput({ name, label, type = 'text', error, autoComplete }: 
         className={`
           w-full border-b bg-transparent px-1 py-2 text-sm text-ink-900 outline-none
           transition-colors placeholder:text-ink-400
-          focus:border-rust-500
+          focus:border-rust-500 focus:ring-1 focus:ring-rust-400
           ${error ? 'border-red-400' : 'border-ink-300'}
         `}
       />
