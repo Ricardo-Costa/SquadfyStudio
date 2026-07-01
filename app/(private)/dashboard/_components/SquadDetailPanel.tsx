@@ -1,8 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSquad } from '@/hooks/useSquad'
 import type { SquadCardData } from '@/lib/types'
+import ConfirmDialog from './ConfirmDialog'
 import SquadMemberCard from './SquadMemberCard'
 
 const SENIORITY_LABELS = {
@@ -18,20 +20,23 @@ interface SquadDetailPanelProps {
 
 export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProps) {
   const router = useRouter()
-  const { count, loadSquad } = useSquad()
+  const { count, editingSquadId, loadSquad } = useSquad()
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
+
+  function proceedToEdit() {
+    if (!data) return
+    loadSquad(data.squad.id, data.displayName, data.squad.members)
+    router.push('/dashboard')
+  }
 
   function handleEdit() {
     if (!data) return
-    if (
-      count > 0 &&
-      !window.confirm(
-        'Você tem membros não salvos no squad atual. Deseja substituí-los pelos membros deste squad?'
-      )
-    ) {
+    const isSameSquad = editingSquadId === data.squad.id
+    if (count > 0 && !isSameSquad) {
+      setIsConfirmOpen(true)
       return
     }
-    loadSquad(data.squad.id, data.displayName, data.squad.members)
-    router.push('/dashboard')
+    proceedToEdit()
   }
 
   if (!data) {
@@ -111,6 +116,18 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
           Editar
         </button>
       </div>
+
+      <ConfirmDialog
+        isOpen={isConfirmOpen}
+        title="Substituir squad atual?"
+        message="Você tem membros não salvos no squad atual. Deseja substituí-los pelos membros deste squad?"
+        confirmLabel="Substituir"
+        onConfirm={() => {
+          setIsConfirmOpen(false)
+          proceedToEdit()
+        }}
+        onCancel={() => setIsConfirmOpen(false)}
+      />
     </aside>
   )
 }
