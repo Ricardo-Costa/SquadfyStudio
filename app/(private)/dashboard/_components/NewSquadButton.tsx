@@ -1,11 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useSquad } from '@/hooks/useSquad'
 import ConfirmDialog from './ConfirmDialog'
 
 export default function NewSquadButton() {
   const { count, resetSquad } = useSquad()
+  const router = useRouter()
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
   if (count === 0) return null
@@ -27,6 +29,11 @@ export default function NewSquadButton() {
         onConfirm={() => {
           setIsConfirmOpen(false)
           resetSquad()
+          // Leaving any /dashboard/<squad-id> edit route is required here:
+          // staying on it would let that route's SquadEditLoader see
+          // editingSquadId reset to null (≠ the URL's squadId) and reload
+          // the same squad right back into the builder, undoing the reset.
+          router.push('/dashboard')
         }}
         onCancel={() => setIsConfirmOpen(false)}
       />
