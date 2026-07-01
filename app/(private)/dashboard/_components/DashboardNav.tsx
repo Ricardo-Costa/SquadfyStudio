@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import LogoutButton from './LogoutButton'
 
 interface NavItem {
   label: string
@@ -85,17 +86,14 @@ export default function DashboardNav() {
       </nav>
 
       {/* Mobile top bar */}
-      <div className="flex items-center justify-between bg-graphite-700 px-4 py-3 lg:hidden">
-        <p className="font-display text-lg font-semibold tracking-tight text-graphite-50">
-          Squadfy<span className="text-rust-400">.</span>
-        </p>
+      <div className="flex items-center gap-3 bg-graphite-700 px-4 py-3 lg:hidden">
         <button
           type="button"
           onClick={() => setIsOpen((open) => !open)}
           aria-label={isOpen ? 'Fechar menu' : 'Abrir menu'}
           aria-expanded={isOpen}
           aria-controls="mobile-nav-drawer"
-          className="rounded-md p-2 text-graphite-200 hover:bg-graphite-800 hover:text-graphite-50"
+          className="-ml-2 rounded-md p-2 text-graphite-200 hover:bg-graphite-800 hover:text-graphite-50"
         >
           <svg
             className="h-6 w-6"
@@ -112,6 +110,12 @@ export default function DashboardNav() {
             />
           </svg>
         </button>
+        <p className="font-display text-lg font-semibold tracking-tight text-graphite-50">
+          Squadfy<span className="text-rust-400">.</span>
+        </p>
+        <div className="ml-auto">
+          <LogoutButton variant="dark" />
+        </div>
       </div>
 
       {/* Mobile overlay drawer */}
