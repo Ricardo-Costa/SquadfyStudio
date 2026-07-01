@@ -26,11 +26,11 @@
 
 **⚠️ CRITICAL**: These 5 tasks establish the global SquadContext. Complete them before any Phase 3+ work.
 
-- [ ] T001 [P] Create `context/squad/actions.ts` — export `SquadAction` union type (`ADD_MEMBER: Developer` | `REMOVE_MEMBER: string`)
-- [ ] T002 [P] Create `context/squad/reducer.ts` — export `MAX_SQUAD_SIZE = 5`, `SquadState`, `initialSquadState`, and `squadReducer` with guards (no overflow, no duplicates)
-- [ ] T003 Create `context/squad/SquadContext.tsx` — export `SquadContextValue`, `SquadContext` (createContext null default), and `SquadProvider` ('use client'; wraps children with `useReducer`)
-- [ ] T004 Create `hooks/useSquad.ts` — export `useSquad()` hook using `use(SquadContext)`; throw if outside provider; return `{ members, count, isFull, isMember, addMember, removeMember }`
-- [ ] T005 Update `app/(private)/layout.tsx` — import `SquadProvider`; wrap children with `<SquadProvider>` inside existing `<Providers>` (React Query outermost, SquadProvider innermost)
+- [X] T001 [P] Create `context/squad/actions.ts` — export `SquadAction` union type (`ADD_MEMBER: Developer` | `REMOVE_MEMBER: string`)
+- [X] T002 [P] Create `context/squad/reducer.ts` — export `MAX_SQUAD_SIZE = 5`, `SquadState`, `initialSquadState`, and `squadReducer` with guards (no overflow, no duplicates)
+- [X] T003 Create `context/squad/SquadContext.tsx` — export `SquadContextValue`, `SquadContext` (createContext null default), and `SquadProvider` ('use client'; wraps children with `useReducer`)
+- [X] T004 Create `hooks/useSquad.ts` — export `useSquad()` hook using `use(SquadContext)`; throw if outside provider; return `{ members, count, isFull, isMember, addMember, removeMember }`
+- [X] T005 Update `app/(private)/layout.tsx` — import `SquadProvider`; wrap children with `<SquadProvider>` inside existing `<Providers>` (React Query outermost, SquadProvider innermost)
 
 **Checkpoint**: Foundation ready — `useSquad()` callable from any component inside `(private)/layout.tsx`. Verify: import `useSquad` in any component and confirm TypeScript resolves the return type without errors.
 
@@ -42,10 +42,10 @@
 
 **Independent Test**: Click add on any developer → developer name appears in squad panel → that card shows emerald "No Squad" badge (no add button).
 
-- [ ] T006 [US1] Update `app/(private)/dashboard/_components/DeveloperCard.tsx` — add three new props (`isInSquad: boolean`, `isFull: boolean`, `onAdd: (dev: Developer) => void`); render emerald "No Squad" badge when `isInSquad`; render active "Adicionar" button calling `onAdd(developer)` when `!isInSquad && !isFull`; keep props optional with sensible defaults so existing usage is not broken
-- [ ] T007 [US1] Create `app/(private)/dashboard/_components/SquadPanel.tsx` — 'use client'; calls `useSquad()`; renders member names list (basic `<ul>` — will be enhanced in US2); renders empty state ("Nenhum membro selecionado. Adicione desenvolvedores do catálogo.") when `count === 0`; renders capacity indicator ("X/5 membros") above the list; sticky on desktop (`lg:sticky lg:top-8`)
-- [ ] T008 [US1] Update `app/(private)/dashboard/_components/CatalogueView.tsx` — import and call `useSquad()`; destructure `isFull` and `isMember` from hook; pass `isInSquad={isMember(dev.id)}`, `isFull={isFull}`, `onAdd={addMember}` to each `<DeveloperCard>` inside the `filteredDevelopers.map()`
-- [ ] T009 [US1] Update `app/(private)/dashboard/page.tsx` — replace single-column layout with two-column grid (`<div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_340px]">`); import and render `<SquadPanel />` as the second grid column alongside `<CatalogueView />`
+- [X] T006 [US1] Update `app/(private)/dashboard/_components/DeveloperCard.tsx` — add three new props (`isInSquad: boolean`, `isFull: boolean`, `onAdd: (dev: Developer) => void`); render emerald "No Squad" badge when `isInSquad`; render active "Adicionar" button calling `onAdd(developer)` when `!isInSquad && !isFull`; keep props optional with sensible defaults so existing usage is not broken
+- [X] T007 [US1] Create `app/(private)/dashboard/_components/SquadPanel.tsx` — 'use client'; calls `useSquad()`; renders member names list (basic `<ul>` — will be enhanced in US2); renders empty state ("Nenhum membro selecionado. Adicione desenvolvedores do catálogo.") when `count === 0`; renders capacity indicator ("X/5 membros") above the list; sticky on desktop (`lg:sticky lg:top-8`)
+- [X] T008 [US1] Update `app/(private)/dashboard/_components/CatalogueView.tsx` — import and call `useSquad()`; destructure `isFull` and `isMember` from hook; pass `isInSquad={isMember(dev.id)}`, `isFull={isFull}`, `onAdd={addMember}` to each `<DeveloperCard>` inside the `filteredDevelopers.map()`
+- [X] T009 [US1] Update `app/(private)/dashboard/page.tsx` — replace single-column layout with two-column grid (`<div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_340px]">`); import and render `<SquadPanel />` as the second grid column alongside `<CatalogueView />`
 
 **Checkpoint**: US1 fully functional. Add developer → appears in squad panel list → card shows badge. No add button visible for in-squad cards.
 
@@ -57,8 +57,8 @@
 
 **Independent Test**: Add 3 developers → panel shows each with avatar, name, seniority chip, "$X/hr"; indicator shows "3/5 membros"; empty state appears after all are removed.
 
-- [ ] T010 [US2] Create `app/(private)/dashboard/_components/SquadMemberCard.tsx` — props: `{ member: Developer }`; renders `<img>` avatar (with DiceBear initials fallback on error); name; seniority chip (same color tokens as DeveloperCard: junior=blue, mid=amber, senior=emerald); `$cost/hr`; no remove button yet (added in US3)
-- [ ] T011 [US2] Enhance `app/(private)/dashboard/_components/SquadPanel.tsx` — replace basic `<ul>` member list with `<SquadMemberCard member={m} />` per member; improve capacity indicator typography (semibold, readable); polish empty state with icon or subtle illustration; add `max-h` + `overflow-y-auto` for overflow safety; refined panel container (rounded-xl border shadow-sm bg-white)
+- [X] T010 [US2] Create `app/(private)/dashboard/_components/SquadMemberCard.tsx` — props: `{ member: Developer }`; renders `<img>` avatar (with DiceBear initials fallback on error); name; seniority chip (same color tokens as DeveloperCard: junior=blue, mid=amber, senior=emerald); `$cost/hr`; no remove button yet (added in US3)
+- [X] T011 [US2] Enhance `app/(private)/dashboard/_components/SquadPanel.tsx` — replace basic `<ul>` member list with `<SquadMemberCard member={m} />` per member; improve capacity indicator typography (semibold, readable); polish empty state with icon or subtle illustration; add `max-h` + `overflow-y-auto` for overflow safety; refined panel container (rounded-xl border shadow-sm bg-white)
 
 **Checkpoint**: US2 fully functional. Squad panel shows rich member cards with all required details. Capacity indicator accurate.
 
@@ -70,8 +70,8 @@
 
 **Independent Test**: Add developer → click × on squad panel entry → developer disappears from panel → their card shows active "Adicionar" button.
 
-- [ ] T012 [US3] Update `app/(private)/dashboard/_components/SquadMemberCard.tsx` — add `onRemove: (id: string) => void` prop; render remove button (`<button aria-label="Remover do squad">×</button>`) positioned top-right or inline-end of card; call `onRemove(member.id)` on click; style: circular button, red hover, `cursor-pointer`
-- [ ] T013 [US3] Update `app/(private)/dashboard/_components/SquadPanel.tsx` — destructure `removeMember` from `useSquad()`; pass `onRemove={removeMember}` to each `<SquadMemberCard>`
+- [X] T012 [US3] Update `app/(private)/dashboard/_components/SquadMemberCard.tsx` — add `onRemove: (id: string) => void` prop; render remove button (`<button aria-label="Remover do squad">×</button>`) positioned top-right or inline-end of card; call `onRemove(member.id)` on click; style: circular button, red hover, `cursor-pointer`
+- [X] T013 [US3] Update `app/(private)/dashboard/_components/SquadPanel.tsx` — destructure `removeMember` from `useSquad()`; pass `onRemove={removeMember}` to each `<SquadMemberCard>`
 
 **Checkpoint**: US3 fully functional. Remove from panel → member gone → card addable again → capacity indicator decrements.
 
@@ -83,8 +83,8 @@
 
 **Independent Test**: Add 5 developers → all remaining cards show grayed-out disabled button (cursor-not-allowed) → indicator shows "5/5" or "Squad completo" → remove 1 → add buttons re-enable.
 
-- [ ] T014 [US4] Update `app/(private)/dashboard/_components/DeveloperCard.tsx` — add third button branch: when `!isInSquad && isFull`, render disabled "Adicionar" button with `disabled`, `opacity-50`, `cursor-not-allowed`, `bg-gray-100 text-gray-400` (no onClick handler)
-- [ ] T015 [US4] Update `app/(private)/dashboard/_components/SquadPanel.tsx` — enhance capacity indicator to visually communicate full state: when `isFull`, show "Squad completo! (5/5)" with amber or red accent color; when not full, show "X/5 membros" in gray; use conditional Tailwind class based on `isFull`
+- [X] T014 [US4] Update `app/(private)/dashboard/_components/DeveloperCard.tsx` — add third button branch: when `!isInSquad && isFull`, render disabled "Adicionar" button with `disabled`, `opacity-50`, `cursor-not-allowed`, `bg-gray-100 text-gray-400` (no onClick handler)
+- [X] T015 [US4] Update `app/(private)/dashboard/_components/SquadPanel.tsx` — enhance capacity indicator to visually communicate full state: when `isFull`, show "Squad completo! (5/5)" with amber or red accent color; when not full, show "X/5 membros" in gray; use conditional Tailwind class based on `isFull`
 
 **Checkpoint**: US4 fully functional. All four user stories work end-to-end. Squad builder feature complete.
 
@@ -94,9 +94,9 @@
 
 **Purpose**: Accessibility, visual polish, and manual validation.
 
-- [ ] T016 [P] Accessibility pass: add `aria-label="Adicionar ao squad"` to add buttons; `aria-label="Remover do squad"` to remove buttons; `aria-disabled="true"` to disabled add buttons; `role="list"` + `role="listitem"` to squad member list in `SquadPanel.tsx`
-- [ ] T017 [P] Visual polish pass: add `transition-colors duration-150` to add/remove buttons; ensure "No Squad" badge has consistent border-radius with DeveloperCard seniority chip; confirm squad panel sidebar has consistent shadow-sm with design system used in feature 002
-- [ ] T018 Run quickstart.md manual validation checklist — execute all US1–US4 checklists plus Visual Quality Checks and State Consistency Checks; confirm all boxes pass before marking feature complete
+- [X] T016 [P] Accessibility pass: add `aria-label="Adicionar ao squad"` to add buttons; `aria-label="Remover do squad"` to remove buttons; `aria-disabled="true"` to disabled add buttons; `role="list"` + `role="listitem"` to squad member list in `SquadPanel.tsx`
+- [X] T017 [P] Visual polish pass: add `transition-colors duration-150` to add/remove buttons; ensure "No Squad" badge has consistent border-radius with DeveloperCard seniority chip; confirm squad panel sidebar has consistent shadow-sm with design system used in feature 002
+- [X] T018 Run quickstart.md manual validation checklist — execute all US1–US4 checklists plus Visual Quality Checks and State Consistency Checks; confirm all boxes pass before marking feature complete
 
 ---
 
