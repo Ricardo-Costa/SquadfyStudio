@@ -33,3 +33,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# compiler cache
+/.swc
+
+# multi-editor AI skill installer (cursor, windsurf, agents lockfile)
+/.cursor
+/.windsurf
+/.agents
