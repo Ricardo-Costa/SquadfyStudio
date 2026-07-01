@@ -39,6 +39,8 @@ export function squadReducer(state: SquadState, action: SquadAction): SquadState
         editingSquadId: action.payload.id,
         editingSquadName: action.payload.name,
       }
+    case 'RESET_SQUAD':
+      return initialSquadState
     default:
       return state
   }
