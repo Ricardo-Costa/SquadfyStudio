@@ -5,3 +5,4 @@ export type SquadAction =
   | { type: 'REMOVE_MEMBER'; payload: string }
   | { type: 'LOAD_SQUAD'; payload: { id: number; name: string; members: Developer[] } }
   | { type: 'RESET_SQUAD' }
+  | { type: 'CLEAR_EDIT_ASSOCIATION' }

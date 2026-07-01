@@ -40,6 +40,9 @@ export function squadReducer(state: SquadState, action: SquadAction): SquadState
       }
     case 'RESET_SQUAD':
       return initialSquadState
+    case 'CLEAR_EDIT_ASSOCIATION':
+      if (state.editingSquadId === null) return state
+      return { ...state, editingSquadId: null, editingSquadName: null }
     default:
       return state
   }
