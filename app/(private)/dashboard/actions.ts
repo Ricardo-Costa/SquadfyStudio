@@ -1,6 +1,7 @@
 'use server'
 
 import type { Developer, SavedSquad } from '@/lib/types'
+import { API_BASE_URL } from '@/lib/config'
 
 export async function saveSquad(
   name: string,
@@ -10,7 +11,7 @@ export async function saveSquad(
   if (!name.trim()) throw new Error('Squad name is required')
   if (members.length === 0) throw new Error('Cannot save empty squad')
 
-  const url = id ? `http://localhost:3001/squads/${id}` : 'http://localhost:3001/squads'
+  const url = id ? `${API_BASE_URL}/squads/${id}` : `${API_BASE_URL}/squads`
   const method = id ? 'PUT' : 'POST'
 
   const res = await fetch(url, {
