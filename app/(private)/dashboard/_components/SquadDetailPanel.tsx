@@ -3,15 +3,9 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSquad } from '@/hooks/useSquad'
-import type { SquadCardData } from '@/lib/types'
+import { type SquadCardData, SENIORITY_LABELS } from '@/lib/types'
 import ConfirmDialog from './ConfirmDialog'
 import SquadMemberCard from './SquadMemberCard'
-
-const SENIORITY_LABELS = {
-  junior: 'Junior',
-  mid: 'Mid',
-  senior: 'Senior',
-}
 
 interface SquadDetailPanelProps {
   data: SquadCardData | null

@@ -3,12 +3,7 @@
 import { useMemo } from 'react'
 import { useSquad } from '@/hooks/useSquad'
 import { calcTotalCost, calcAvgSeniority, calcSkillCoverage } from '@/lib/metrics'
-
-const SENIORITY_LABEL = {
-  junior: 'Junior',
-  mid: 'Mid',
-  senior: 'Senior',
-}
+import { SENIORITY_LABELS } from '@/lib/types'
 
 export default function MetricsPanel() {
   const { members } = useSquad()
@@ -30,7 +25,7 @@ export default function MetricsPanel() {
       </div>
       <div className="flex-1 px-3">
         <p className="font-display text-2xl font-semibold text-graphite-50">
-          {metrics.avgSeniority ? SENIORITY_LABEL[metrics.avgSeniority] : '—'}
+          {metrics.avgSeniority ? SENIORITY_LABELS[metrics.avgSeniority] : '—'}
         </p>
         <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Seniority</p>
       </div>

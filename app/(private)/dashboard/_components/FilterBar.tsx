@@ -1,12 +1,10 @@
 'use client'
 
-import type { Seniority } from '@/lib/types'
+import { type Seniority, SENIORITY_LABELS } from '@/lib/types'
 
-const SENIORITY_OPTIONS: { value: Seniority; label: string }[] = [
-  { value: 'junior', label: 'Junior' },
-  { value: 'mid', label: 'Mid' },
-  { value: 'senior', label: 'Senior' },
-]
+const SENIORITY_OPTIONS: { value: Seniority; label: string }[] = (
+  ['junior', 'mid', 'senior'] as const
+).map((value) => ({ value, label: SENIORITY_LABELS[value] }))
 
 const SENIORITY_DOT: Record<Seniority, string> = {
   junior: 'bg-seniority-junior',
