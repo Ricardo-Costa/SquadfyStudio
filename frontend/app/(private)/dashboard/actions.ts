@@ -25,3 +25,11 @@ export async function saveSquad(
   }
   return res.json() as Promise<SavedSquad>
 }
+
+export async function deleteSquad(id: number): Promise<void> {
+  const res = await fetch(`${SERVER_API_BASE_URL}/squads/${id}`, { method: 'DELETE' })
+  if (!res.ok) {
+    const body = await res.text().catch(() => '')
+    throw new Error(`Failed to delete squad: ${res.status} ${res.statusText}${body ? ` — ${body}` : ''}`)
+  }
+}

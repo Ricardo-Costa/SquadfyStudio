@@ -1,10 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
 import { useSquad } from '@/hooks/useSquad'
 import { type SquadCardData, SENIORITY_LABELS } from '@/lib/types'
 import { formatCurrency } from '@/lib/squad/squads'
+import { SAVE_ERROR_RESET_MS } from '@/lib/config'
+import { deleteSquad } from '../actions'
 import ConfirmDialog from './ConfirmDialog'
 import SquadMemberCard from './SquadMemberCard'
 
@@ -13,10 +16,22 @@ interface SquadDetailPanelProps {
   onClose: () => void
 }
 
+type DeleteState = 'idle' | 'loading' | 'error'
+
 export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProps) {
   const router = useRouter()
-  const { editingSquadId, isDirty } = useSquad()
+  const queryClient = useQueryClient()
+  const { editingSquadId, isDirty, resetSquad } = useSquad()
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false)
+  const [deleteState, setDeleteState] = useState<DeleteState>('idle')
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current)
+    }
+  }, [])
 
   function proceedToEdit() {
     if (!data) return
@@ -33,6 +48,25 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
     proceedToEdit()
   }
 
+  async function handleDeleteConfirm() {
+    if (!data) return
+    setDeleteState('loading')
+    try {
+      await deleteSquad(data.squad.id)
+      queryClient.invalidateQueries({ queryKey: ['squads'] })
+      setIsDeleteConfirmOpen(false)
+      // Only the builder's association with THIS squad should clear — deleting
+      // a different squad than the one currently loaded must leave the builder
+      // untouched (FR-008).
+      if (editingSquadId === data.squad.id) resetSquad()
+      onClose()
+    } catch {
+      setIsDeleteConfirmOpen(false)
+      setDeleteState('error')
+      timerRef.current = setTimeout(() => setDeleteState('idle'), SAVE_ERROR_RESET_MS)
+    }
+  }
+
   if (!data) {
     return (
       <aside className="flex flex-col items-center justify-center border-t-2 border-ink-200 bg-ink-25 p-8 text-center lg:sticky lg:top-8 lg:self-start">
@@ -42,6 +76,16 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
   }
 
   const { squad, displayName, totalCost, avgSeniority, skillCoverage } = data
+
+  let deleteLabel = 'Excluir'
+  let deleteColorClass = 'border border-red-400/60 text-red-400 hover:bg-red-500/10 hover:text-red-300'
+  if (deleteState === 'loading') {
+    deleteLabel = 'Excluindo…'
+    deleteColorClass = 'border border-graphite-600 text-graphite-500 cursor-not-allowed'
+  } else if (deleteState === 'error') {
+    deleteLabel = 'Erro ao excluir'
+    deleteColorClass = 'border border-red-500 bg-red-700/20 text-red-300'
+  }
 
   return (
     <aside className="flex flex-col bg-graphite-700 text-graphite-50 lg:sticky lg:top-8 lg:self-start">
@@ -109,6 +153,17 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
         >
           Editar
         </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            if (deleteState !== 'loading') setIsDeleteConfirmOpen(true)
+          }}
+          disabled={deleteState === 'loading'}
+          className={`w-full rounded-full px-4 py-2.5 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-graphite-700 ${deleteColorClass}`}
+        >
+          {deleteLabel}
+        </button>
       </div>
 
       <ConfirmDialog
@@ -121,6 +176,15 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
           proceedToEdit()
         }}
         onCancel={() => setIsConfirmOpen(false)}
+      />
+
+      <ConfirmDialog
+        isOpen={isDeleteConfirmOpen}
+        title="Excluir squad?"
+        message="Esta ação não pode ser desfeita. O squad será excluído permanentemente."
+        confirmLabel="Excluir"
+        onConfirm={handleDeleteConfirm}
+        onCancel={() => setIsDeleteConfirmOpen(false)}
       />
     </aside>
   )
