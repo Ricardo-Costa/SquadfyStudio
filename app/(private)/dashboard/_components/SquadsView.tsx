@@ -179,7 +179,7 @@ export default function SquadsView() {
           seniorities={filterState.seniorities}
           onSeniorityToggle={handleSeniorityToggle}
           placeholder="Buscar squad…"
-          ariaLabel="Search squads"
+          ariaLabel="Buscar squads"
         />
         <SquadsGrid
           isLoading={isLoading}

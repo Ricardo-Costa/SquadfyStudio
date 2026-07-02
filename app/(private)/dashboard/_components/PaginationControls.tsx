@@ -25,7 +25,7 @@ export default function PaginationControls({
         disabled={!hasPrevious}
         className="rounded text-sm font-medium text-ink-600 transition-colors hover:text-rust-600 focus:outline-none focus:ring-2 focus:ring-rust-400 focus:ring-offset-2 focus:ring-offset-ink-50 disabled:cursor-not-allowed disabled:text-ink-300 disabled:hover:text-ink-300"
       >
-        ← Previous
+        ← Anterior
       </button>
       <span className="text-xs tabular-nums tracking-wide text-ink-400">
         {currentPage} / {totalPages}
@@ -36,7 +36,7 @@ export default function PaginationControls({
         disabled={!hasNext}
         className="rounded text-sm font-medium text-ink-600 transition-colors hover:text-rust-600 focus:outline-none focus:ring-2 focus:ring-rust-400 focus:ring-offset-2 focus:ring-offset-ink-50 disabled:cursor-not-allowed disabled:text-ink-300 disabled:hover:text-ink-300"
       >
-        Next →
+        Próxima →
       </button>
     </div>
   )

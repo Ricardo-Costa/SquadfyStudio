@@ -74,16 +74,16 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
             <p className="font-display text-2xl font-semibold text-graphite-50">
               {avgSeniority ? SENIORITY_LABELS[avgSeniority] : '—'}
             </p>
-            <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Seniority</p>
+            <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Senioridade</p>
           </div>
           <div className="flex-1 pl-3">
             <p className="font-display text-2xl font-semibold tabular-nums text-graphite-50">{skillCoverage.length}</p>
-            <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Skills</p>
+            <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Habilidades</p>
           </div>
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-graphite-400">Skills</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-graphite-400">Habilidades</h3>
           <p className="mt-2 text-xs leading-relaxed text-graphite-200">
             {skillCoverage.join(' · ')}
           </p>
