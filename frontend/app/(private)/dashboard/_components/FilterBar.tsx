@@ -1,6 +1,7 @@
 'use client'
 
 import { type Seniority, SENIORITY_LABELS } from '@/lib/types'
+import { SEARCH_MAX_LENGTH } from '@/lib/config'
 
 const SENIORITY_OPTIONS: { value: Seniority; label: string }[] = (
   ['junior', 'mid', 'senior'] as const
@@ -51,6 +52,7 @@ export default function FilterBar({
           type="text"
           value={name}
           onChange={(e) => onNameChange(e.target.value)}
+          maxLength={SEARCH_MAX_LENGTH}
           placeholder={placeholder}
           aria-label={ariaLabel}
           className="w-full border-b border-ink-300 bg-transparent py-2 pl-6 pr-2 text-sm text-ink-900 placeholder-ink-400 focus:border-rust-500 focus:outline-none focus:ring-1 focus:ring-rust-400"

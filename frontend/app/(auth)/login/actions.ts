@@ -4,8 +4,10 @@ import { cookies, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { signToken } from '@/lib/auth/auth'
 import { checkRateLimit, recordFailedAttempt, resetAttempts } from '@/lib/auth/rate-limit'
+import { EMAIL_MAX_LENGTH, PASSWORD_MAX_LENGTH } from '@/lib/config'
+import { containsDangerousContent, exceedsMaxLength } from '@/lib/validation'
 
-type LoginErrorCode = 'invalid_credentials' | 'rate_limited' | 'server_error'
+type LoginErrorCode = 'invalid_credentials' | 'rate_limited' | 'server_error' | 'validation_error'
 
 export type LoginActionState =
   | { status: 'idle' }
@@ -19,6 +21,19 @@ export async function login(
   try {
     const email = formData.get('email') as string
     const password = formData.get('password') as string
+
+    if (
+      exceedsMaxLength(email, EMAIL_MAX_LENGTH) ||
+      exceedsMaxLength(password, PASSWORD_MAX_LENGTH) ||
+      containsDangerousContent(email) ||
+      containsDangerousContent(password)
+    ) {
+      return {
+        status: 'error',
+        code: 'validation_error',
+        message: 'E-mail ou senha inválidos ou fora dos limites permitidos.',
+      }
+    }
 
     const headersList = await headers()
     const ip =

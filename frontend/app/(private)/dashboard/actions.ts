@@ -1,14 +1,24 @@
 'use server'
 
 import type { Developer, SavedSquad } from '@/lib/types'
-import { SERVER_API_BASE_URL } from '@/lib/config'
+import { SERVER_API_BASE_URL, SQUAD_NAME_MIN_LENGTH, SQUAD_NAME_MAX_LENGTH } from '@/lib/config'
+import { containsDangerousContent, exceedsMaxLength, isBelowMinLength } from '@/lib/validation'
 
 export async function saveSquad(
   name: string,
   members: Developer[],
   id?: number
 ): Promise<SavedSquad> {
-  if (!name.trim()) throw new Error('Squad name is required')
+  const trimmedName = name.trim()
+  if (isBelowMinLength(trimmedName, SQUAD_NAME_MIN_LENGTH)) {
+    throw new Error(`Squad name must be at least ${SQUAD_NAME_MIN_LENGTH} characters`)
+  }
+  if (exceedsMaxLength(trimmedName, SQUAD_NAME_MAX_LENGTH)) {
+    throw new Error(`Squad name must be at most ${SQUAD_NAME_MAX_LENGTH} characters`)
+  }
+  if (containsDangerousContent(trimmedName)) {
+    throw new Error('Squad name contains invalid characters')
+  }
   if (members.length === 0) throw new Error('Cannot save empty squad')
 
   const url = id ? `${SERVER_API_BASE_URL}/squads/${id}` : `${SERVER_API_BASE_URL}/squads`

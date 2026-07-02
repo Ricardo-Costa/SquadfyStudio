@@ -31,3 +31,18 @@ export const RATE_LIMIT_MAX_ATTEMPTS = 5
 
 /** How long an IP stays blocked after exceeding RATE_LIMIT_MAX_ATTEMPTS (ms). */
 export const RATE_LIMIT_BLOCK_DURATION_MS = 15 * 60 * 1000
+
+/** Max characters accepted for the login e-mail field (RFC 5321 practical limit). */
+export const EMAIL_MAX_LENGTH = 254
+
+/** Max characters accepted for the login password field. */
+export const PASSWORD_MAX_LENGTH = 128
+
+/** Min characters (after trimming) required for a squad name. */
+export const SQUAD_NAME_MIN_LENGTH = 2
+
+/** Max characters (after trimming) accepted for a squad name. */
+export const SQUAD_NAME_MAX_LENGTH = 60
+
+/** Max characters accepted for the Catalogue/Squads search fields. */
+export const SEARCH_MAX_LENGTH = 100
