@@ -11,7 +11,7 @@ export default function DashboardCatalogue() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rust-600">
               Catálogo
             </p>
-            <h1 className="mt-1 font-display text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
+            <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight text-ink-900 sm:text-3xl">
               Catálogo de Desenvolvedores
             </h1>
           </div>
