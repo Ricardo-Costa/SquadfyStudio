@@ -66,19 +66,19 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
 
       <div className="space-y-5 px-5 pb-5">
         <div className="flex items-baseline divide-x divide-graphite-600 border-y border-graphite-600 py-4">
-          <div className="flex-1 pr-3">
+          <div className="min-w-0 flex-1 pr-3">
             <p className="font-display text-2xl font-semibold tabular-nums text-graphite-50">{formatCurrency(totalCost)}</p>
-            <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Custo/hr</p>
+            <p className="mt-0.5 truncate text-[11px] uppercase tracking-normal text-graphite-400">Custo/hr</p>
           </div>
-          <div className="flex-1 px-3">
+          <div className="min-w-0 flex-1 px-3">
             <p className="font-display text-2xl font-semibold text-graphite-50">
               {avgSeniority ? SENIORITY_LABELS[avgSeniority] : '—'}
             </p>
-            <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Senioridade</p>
+            <p className="mt-0.5 truncate text-[11px] uppercase tracking-normal text-graphite-400">Senioridade</p>
           </div>
-          <div className="flex-1 pl-3">
+          <div className="min-w-0 flex-1 pl-3">
             <p className="font-display text-2xl font-semibold tabular-nums text-graphite-50">{skillCoverage.length}</p>
-            <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Habilidades</p>
+            <p className="mt-0.5 truncate text-[11px] uppercase tracking-normal text-graphite-400">Habilidades</p>
           </div>
         </div>
 

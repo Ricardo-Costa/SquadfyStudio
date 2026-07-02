@@ -51,19 +51,19 @@ export default function SquadCard({ data, onClick }: SquadCardProps) {
       <p className="mt-1.5 text-xs text-ink-500">{squad.members.length} membros</p>
 
       <div className="mt-4 flex items-baseline divide-x divide-ink-200 border-t border-ink-200 pt-3">
-        <div className="flex-1 pr-2">
+        <div className="min-w-0 flex-1 pr-2">
           <p className="font-display text-lg font-semibold tabular-nums text-ink-900">{formatCurrency(totalCost)}</p>
-          <p className="text-[10px] uppercase tracking-wide text-ink-500">Custo/hr</p>
+          <p className="truncate text-[10px] uppercase tracking-normal text-ink-500">Custo/hr</p>
         </div>
-        <div className="flex-1 px-2">
+        <div className="min-w-0 flex-1 px-2">
           <p className="font-display text-lg font-semibold text-ink-900">
             {avgSeniority ? SENIORITY_LABELS[avgSeniority] : '—'}
           </p>
-          <p className="text-[10px] uppercase tracking-wide text-ink-500">Senioridade</p>
+          <p className="truncate text-[10px] uppercase tracking-normal text-ink-500">Senioridade</p>
         </div>
-        <div className="flex-1 pl-2">
+        <div className="min-w-0 flex-1 pl-2">
           <p className="font-display text-lg font-semibold tabular-nums text-ink-900">{skillCoverage.length}</p>
-          <p className="text-[10px] uppercase tracking-wide text-ink-500">Habilidades</p>
+          <p className="truncate text-[10px] uppercase tracking-normal text-ink-500">Habilidades</p>
         </div>
       </div>
     </div>
