@@ -1,4 +1,5 @@
 import { type Developer, SENIORITY_LABELS } from '@/lib/types'
+import { formatCurrency } from '@/lib/squad/squads'
 
 const SENIORITY_DOT: Record<Developer['seniority'], string> = {
   junior: 'bg-seniority-junior',
@@ -44,7 +45,7 @@ export default function DeveloperCard({
             <span className={`h-1.5 w-1.5 rounded-full ${SENIORITY_DOT[seniority]}`} aria-hidden="true" />
             {SENIORITY_LABELS[seniority]}
             <span className="text-ink-300">·</span>
-            <span className="tabular-nums">${cost}/hr</span>
+            <span className="tabular-nums">{formatCurrency(cost)}/hr</span>
           </div>
         </div>
       </div>
@@ -56,8 +57,14 @@ export default function DeveloperCard({
       <div className="mt-4">
         {isInSquad ? (
           <span className="inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-seniority-senior">
-            <span className="h-1.5 w-1.5 rounded-full bg-seniority-senior" aria-hidden="true" />
-            No squad
+            <svg className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path
+                fillRule="evenodd"
+                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Adicionado
           </span>
         ) : isFull ? (
           <button

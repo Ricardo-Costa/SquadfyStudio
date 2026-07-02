@@ -19,6 +19,9 @@ export async function saveSquad(
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, savedAt: new Date().toISOString(), members }),
   })
-  if (!res.ok) throw new Error('Failed to save squad')
+  if (!res.ok) {
+    const body = await res.text().catch(() => '')
+    throw new Error(`Failed to save squad: ${res.status} ${res.statusText}${body ? ` — ${body}` : ''}`)
+  }
   return res.json() as Promise<SavedSquad>
 }

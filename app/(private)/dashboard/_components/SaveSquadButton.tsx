@@ -69,7 +69,7 @@ export default function SaveSquadButton() {
         type="button"
         onClick={handleOpenModal}
         disabled={isDisabled}
-        className={`w-full rounded-full px-4 py-2.5 text-sm font-semibold transition-colors ${colorClass}`}
+        className={`w-full rounded-full px-4 py-2.5 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-rust-400 focus:ring-offset-2 focus:ring-offset-graphite-700 ${colorClass}`}
       >
         {label}
       </button>

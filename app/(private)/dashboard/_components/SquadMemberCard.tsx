@@ -1,4 +1,5 @@
 import { type Developer, SENIORITY_LABELS } from '@/lib/types'
+import { formatCurrency } from '@/lib/squad/squads'
 
 interface SquadMemberCardProps {
   member: Developer
@@ -28,7 +29,7 @@ export default function SquadMemberCard({ member, onRemove }: SquadMemberCardPro
         <p className="truncate text-sm text-graphite-50">{name}</p>
         <p className="text-xs text-graphite-400">
           {SENIORITY_LABELS[seniority]} <span className="text-graphite-600">·</span>{' '}
-          <span className="tabular-nums">${cost}/hr</span>
+          <span className="tabular-nums">{formatCurrency(cost)}/hr</span>
         </p>
       </div>
       {onRemove && (
