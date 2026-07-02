@@ -34,7 +34,7 @@ The text between `<!-- SPECKIT START -->` and `<!-- SPECKIT END -->` at the bott
 - **Tailwind CSS** — responsive layout
 - **React Query** — server state (catalogue fetching, cache, loading/error)
 - **Context API + useReducer** — global client state for squad management
-- **JSON Server** — mock REST API (data in `db.json`, script in `package.json`)
+- **JSON Server** — mock REST API (`mock-api/` — standalone project, seed data in `mock-api/db.json`)
 - **Jest** — unit tests for metric calculation functions
 
 ## Architecture Constraints
@@ -83,9 +83,14 @@ npm run build
 
 ## JSON Server Setup
 
-- Mock data lives in `db.json` at the project root
+- Mock API lives in `mock-api/` — a standalone Node project (own `package.json`,
+  `node_modules`), used both for local dev and as its own Vercel deployment. There is no
+  `db.json` at the repo root; `mock-api/db.json` is the single source of truth for developer
+  seed data.
 - Minimum 20 developer profiles with: `id`, `name`, `avatar`, `seniority` (`junior`|`mid`|`senior`), `cost` (number), `skills` (string[])
-- Typical script: `"mock": "json-server --watch db.json --port 3001"`
+- `npm run mock` (at the repo root) installs `mock-api`'s dependencies if needed and runs
+  `mock-api/local.js`, which wraps the same Express app deployed to Vercel (`mock-api/index.js`)
+  with a `.listen(3001)` call. See `mock-api/README.md` for the Vercel deployment side.
 
 ## Key Folder Conventions (expected structure)
 
