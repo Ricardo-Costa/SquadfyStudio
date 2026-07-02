@@ -12,7 +12,7 @@ export default function DashboardCatalogue() {
               Catálogo
             </p>
             <h1 className="mt-1 font-display text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
-              Developer Catalogue
+              Catálogo de Desenvolvedores
             </h1>
           </div>
           <NewSquadButton />
