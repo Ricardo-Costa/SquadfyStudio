@@ -18,9 +18,10 @@ persistence) — do not use this pattern for anything that needs durable storage
 ## Deploying
 
 1. In the Vercel dashboard, create a **new project** from this same GitHub repo.
-2. Set **Root Directory** to `mock-api`.
-3. No environment variables or build command needed — it's a single serverless function, no
-   framework build step.
+2. Set **Root Directory** to `mock-api`. Application/Framework Preset: **Node**.
+3. No build command, no output directory, no environment variables needed — Vercel detects the
+   Express app from `index.js` (Node backends are deployed as a single Lambda with routes
+   introspected automatically; no `vercel.json` rewrites needed).
 4. Deploy. Note the resulting URL (e.g. `https://squadfy-mock-api.vercel.app`).
 5. On the **main** Squadfy Studio Vercel project, set the environment variable
    `NEXT_PUBLIC_API_BASE_URL` to that URL (no trailing slash), then redeploy the main project so
