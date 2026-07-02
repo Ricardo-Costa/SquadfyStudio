@@ -1,21 +1,28 @@
-# Squadfy Mock API (Vercel deployment)
+# Squadfy Mock API
 
-A standalone deployment of the same JSON Server mock API used locally (`npm run mock` at the
-repo root), packaged to run as a Vercel Serverless Function.
+The JSON Server mock API for Squadfy Studio — a standalone Node project used both for local
+development and as its own Vercel deployment, so there's exactly one implementation and one
+seed data file to keep in sync.
 
-## Why a separate project
+- **Local**: `npm run mock` at the repo root installs this project's dependencies if needed and
+  runs `local.js`, which starts the same app on `http://localhost:3001`.
+- **Deployed**: `index.js` exports the Express app directly (no `.listen()` call) — Vercel's
+  Node backend convention deploys it as a single Lambda with routes introspected automatically.
 
-Vercel Functions don't have a persistent, shared filesystem — `json-server`'s normal mode
-(`--watch db.json`) expects a single long-running process writing to a local file, which isn't
-how serverless compute works. This wraps the same `json-server` router, but points it at `/tmp`
-(the only writable directory in a Vercel Function) and re-seeds from `db.json` whenever that
-file doesn't exist yet.
+## Why /tmp instead of writing db.json directly
 
-**Data resets on cold starts, redeploys, and when a request lands on a different warm
-instance.** This is intentional for this project (demo/interview fixture, not real
-persistence) — do not use this pattern for anything that needs durable storage.
+Vercel Functions don't have a persistent, shared filesystem, so `json-server`'s normal mode
+(`--watch db.json`, writing straight to that file) doesn't work there. Both `index.js` (used
+locally and on Vercel) instead copy the seed from `db.json` into `/tmp/db.json` on first run and
+serve/mutate that copy.
 
-## Deploying
+**Data resets whenever `/tmp/db.json` goes away** — a cold start or redeploy on Vercel, or
+whenever `/tmp` gets cleared locally (typically only on reboot, not on every `npm run mock`
+restart). This is intentional for this project (demo/interview fixture, not real persistence) —
+don't use this pattern for anything that needs durable storage. `db.json` itself is never
+written to at runtime — it's just the seed, safe to edit and commit like any other source file.
+
+## Deploying (Vercel)
 
 1. In the Vercel dashboard, create a **new project** from this same GitHub repo.
 2. Set **Root Directory** to `mock-api`. Application/Framework Preset: **Node**.
@@ -29,5 +36,5 @@ persistence) — do not use this pattern for anything that needs durable storage
 
 ## Endpoints
 
-Same as local: `GET/POST /developers`, `GET/POST/PUT/DELETE /squads`, `/squads/:id`, etc. —
-standard `json-server` REST conventions over `db.json`'s top-level keys.
+`GET/POST /developers`, `GET/POST/PUT/DELETE /squads`, `/squads/:id`, etc. — standard
+`json-server` REST conventions over `db.json`'s top-level keys.

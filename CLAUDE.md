@@ -34,7 +34,7 @@ The text between `<!-- SPECKIT START -->` and `<!-- SPECKIT END -->` at the bott
 - **Tailwind CSS** — responsive layout
 - **React Query** — server state (catalogue fetching, cache, loading/error)
 - **Context API + useReducer** — global client state for squad management
-- **JSON Server** — mock REST API (data in `db.json`, script in `package.json`)
+- **JSON Server** — mock REST API (`mock-api/` — standalone project, seed data in `mock-api/db.json`)
 - **Jest** — unit tests for metric calculation functions
 
 ## Architecture Constraints
@@ -57,13 +57,24 @@ The text between `<!-- SPECKIT START -->` and `<!-- SPECKIT END -->` at the bott
 ### Persistence
 - "Save Squad" sends data to JSON Server via a **Server Action** (POST), not a direct client fetch
 
+## Repo Layout (monorepo)
+
+The repo root holds only project-wide concerns (Speckit, docs, cross-cutting scripts) plus a
+thin `package.json` that orchestrates two independent subprojects:
+
+- **`web/`** — the Next.js app (own `package.json`, `node_modules`, `tsconfig.json`, etc.)
+- **`mock-api/`** — the JSON Server mock API (own `package.json`, deployed standalone to Vercel)
+
+Root-level `npm run <script>` commands just delegate via `npm --prefix web|mock-api run <script>`
+— see `package.json` at the repo root.
+
 ## Dev Commands
 
 ```bash
-# Install dependencies
-npm install
+# Install web app dependencies (run once, or after pulling dependency changes)
+npm --prefix web install
 
-# Run JSON Server mock API (port 3001 by default)
+# Run JSON Server mock API (port 3001 by default) — installs mock-api deps on first run
 npm run mock
 
 # Run Next.js dev server
@@ -73,45 +84,57 @@ npm run dev
 npm test
 
 # Run a single test file
-npx jest <path/to/file>
+cd web && npx jest <path/to/file>
 
 # Build for production
 npm run build
+
+# Kill anything stuck on ports 3000/3001
+npm run free-ports
 ```
 
-> `npm run mock` must be running alongside `npm run dev` for API calls to work locally.
+> `npm run mock` must be running alongside `npm run dev` for API calls to work locally. All of
+> these are run from the **repo root**.
 
 ## JSON Server Setup
 
-- Mock data lives in `db.json` at the project root
+- Mock API lives in `mock-api/` — a standalone Node project (own `package.json`,
+  `node_modules`), used both for local dev and as its own Vercel deployment. There is no
+  `db.json` at the repo root; `mock-api/db.json` is the single source of truth for developer
+  seed data.
 - Minimum 20 developer profiles with: `id`, `name`, `avatar`, `seniority` (`junior`|`mid`|`senior`), `cost` (number), `skills` (string[])
-- Typical script: `"mock": "json-server --watch db.json --port 3001"`
+- `npm run mock` (at the repo root) installs `mock-api`'s dependencies if needed and runs
+  `mock-api/local.js`, which wraps the same Express app deployed to Vercel (`mock-api/index.js`)
+  with a `.listen(3001)` call. See `mock-api/README.md` for the Vercel deployment side.
 
 ## Key Folder Conventions (expected structure)
 
 ```
-app/
-  (auth)/login/      # login page + server action
-  (private)/
-    middleware.ts    # or root middleware.ts
-    dashboard/       # catalogue + squad builder
-context/
-  squad/
-    actions.ts
-    reducer.ts
-    SquadContext.tsx
-hooks/
-  useSquad.ts
-lib/
-  config.ts          # central constants (page size, limits, timeouts, URLs)
-  types.ts           # shared TypeScript types
-  auth/
-    auth.ts          # token generation/validation
-    rate-limit.ts    # login attempt rate limiting
-  squad/
-    metrics.ts       # pure functions (tested with Jest)
-    squads.ts        # squad display helpers
-    pagination.ts    # catalogue/squads grid pagination
+package.json         # root orchestrator only (delegates to web/ and mock-api/)
+mock-api/             # standalone JSON Server project — see mock-api/README.md
+web/
+  app/
+    (auth)/login/      # login page + server action
+    (private)/
+      middleware.ts    # or web/middleware.ts
+      dashboard/       # catalogue + squad builder
+  context/
+    squad/
+      actions.ts
+      reducer.ts
+      SquadContext.tsx
+  hooks/
+    useSquad.ts
+  lib/
+    config.ts          # central constants (page size, limits, timeouts, URLs)
+    types.ts           # shared TypeScript types
+    auth/
+      auth.ts          # token generation/validation
+      rate-limit.ts    # login attempt rate limiting
+    squad/
+      metrics.ts       # pure functions (tested with Jest)
+      squads.ts        # squad display helpers
+      pagination.ts    # catalogue/squads grid pagination
 ```
 
 ## Credential Fixture
