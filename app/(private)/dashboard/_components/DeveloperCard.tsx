@@ -1,4 +1,5 @@
 import { type Developer, SENIORITY_LABELS } from '@/lib/types'
+import { formatCurrency } from '@/lib/squad/squads'
 
 const SENIORITY_DOT: Record<Developer['seniority'], string> = {
   junior: 'bg-seniority-junior',
@@ -44,7 +45,7 @@ export default function DeveloperCard({
             <span className={`h-1.5 w-1.5 rounded-full ${SENIORITY_DOT[seniority]}`} aria-hidden="true" />
             {SENIORITY_LABELS[seniority]}
             <span className="text-ink-300">·</span>
-            <span className="tabular-nums">${cost}/hr</span>
+            <span className="tabular-nums">{formatCurrency(cost)}/hr</span>
           </div>
         </div>
       </div>

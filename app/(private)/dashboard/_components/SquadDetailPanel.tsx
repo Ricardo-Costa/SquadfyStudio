@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSquad } from '@/hooks/useSquad'
 import { type SquadCardData, SENIORITY_LABELS } from '@/lib/types'
+import { formatCurrency } from '@/lib/squad/squads'
 import ConfirmDialog from './ConfirmDialog'
 import SquadMemberCard from './SquadMemberCard'
 
@@ -66,7 +67,7 @@ export default function SquadDetailPanel({ data, onClose }: SquadDetailPanelProp
       <div className="space-y-5 px-5 pb-5">
         <div className="flex items-baseline divide-x divide-graphite-600 border-y border-graphite-600 py-4">
           <div className="flex-1 pr-3">
-            <p className="font-display text-2xl font-semibold tabular-nums text-graphite-50">${totalCost}</p>
+            <p className="font-display text-2xl font-semibold tabular-nums text-graphite-50">{formatCurrency(totalCost)}</p>
             <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Custo/hr</p>
           </div>
           <div className="flex-1 px-3">
