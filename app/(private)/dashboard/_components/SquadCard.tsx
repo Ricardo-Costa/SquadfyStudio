@@ -59,11 +59,11 @@ export default function SquadCard({ data, onClick }: SquadCardProps) {
           <p className="font-display text-lg font-semibold text-ink-900">
             {avgSeniority ? SENIORITY_LABELS[avgSeniority] : '—'}
           </p>
-          <p className="text-[10px] uppercase tracking-wide text-ink-500">Seniority</p>
+          <p className="text-[10px] uppercase tracking-wide text-ink-500">Senioridade</p>
         </div>
         <div className="flex-1 pl-2">
           <p className="font-display text-lg font-semibold tabular-nums text-ink-900">{skillCoverage.length}</p>
-          <p className="text-[10px] uppercase tracking-wide text-ink-500">Skills</p>
+          <p className="text-[10px] uppercase tracking-wide text-ink-500">Habilidades</p>
         </div>
       </div>
     </div>
