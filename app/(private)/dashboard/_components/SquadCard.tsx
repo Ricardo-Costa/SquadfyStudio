@@ -1,4 +1,5 @@
 import { type SquadCardData, SENIORITY_LABELS } from '@/lib/types'
+import { formatCurrency } from '@/lib/squad/squads'
 
 interface SquadCardProps {
   data: SquadCardData
@@ -51,7 +52,7 @@ export default function SquadCard({ data, onClick }: SquadCardProps) {
 
       <div className="mt-4 flex items-baseline divide-x divide-ink-200 border-t border-ink-200 pt-3">
         <div className="flex-1 pr-2">
-          <p className="font-display text-lg font-semibold tabular-nums text-ink-900">${totalCost}</p>
+          <p className="font-display text-lg font-semibold tabular-nums text-ink-900">{formatCurrency(totalCost)}</p>
           <p className="text-[10px] uppercase tracking-wide text-ink-500">Custo/hr</p>
         </div>
         <div className="flex-1 px-2">

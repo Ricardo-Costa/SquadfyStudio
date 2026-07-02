@@ -3,6 +3,7 @@
 import { type Developer, SENIORITY_LABELS } from '@/lib/types'
 import { useSquad } from '@/hooks/useSquad'
 import { MAX_SQUAD_SIZE } from '@/lib/config'
+import { formatCurrency } from '@/lib/squad/squads'
 import MetricsPanel from './MetricsPanel'
 import SaveSquadButton from './SaveSquadButton'
 
@@ -36,7 +37,7 @@ function RosterRow({ member, index, onRemove }: RosterRowProps) {
         <p className="truncate text-sm text-graphite-50">{member.name}</p>
         <p className="text-xs text-graphite-400">
           {SENIORITY_LABELS[member.seniority]} <span className="text-graphite-600">·</span>{' '}
-          <span className="tabular-nums">${member.cost}/hr</span>
+          <span className="tabular-nums">{formatCurrency(member.cost)}/hr</span>
         </p>
       </div>
       <button
