@@ -62,17 +62,17 @@ The text between `<!-- SPECKIT START -->` and `<!-- SPECKIT END -->` at the bott
 The repo root holds only project-wide concerns (Speckit, docs, cross-cutting scripts) plus a
 thin `package.json` that orchestrates two independent subprojects:
 
-- **`web/`** — the Next.js app (own `package.json`, `node_modules`, `tsconfig.json`, etc.)
+- **`frontend/`** — the Next.js app (own `package.json`, `node_modules`, `tsconfig.json`, etc.)
 - **`mock-api/`** — the JSON Server mock API (own `package.json`, deployed standalone to Vercel)
 
-Root-level `npm run <script>` commands just delegate via `npm --prefix web|mock-api run <script>`
+Root-level `npm run <script>` commands just delegate via `npm --prefix frontend|mock-api run <script>`
 — see `package.json` at the repo root.
 
 ## Dev Commands
 
 ```bash
-# Install web app dependencies (run once, or after pulling dependency changes)
-npm --prefix web install
+# Install frontend app dependencies (run once, or after pulling dependency changes)
+npm --prefix frontend install
 
 # Run JSON Server mock API (port 3001 by default) — installs mock-api deps on first run
 npm run mock
@@ -84,7 +84,7 @@ npm run dev
 npm test
 
 # Run a single test file
-cd web && npx jest <path/to/file>
+cd frontend && npx jest <path/to/file>
 
 # Build for production
 npm run build
@@ -95,6 +95,23 @@ npm run free-ports
 
 > `npm run mock` must be running alongside `npm run dev` for API calls to work locally. All of
 > these are run from the **repo root**.
+
+## Running via Docker Compose
+
+`docker compose up --build` runs both services (`frontend` on :3000, `mock-api` on :3001) in
+containers — a self-contained alternative to `npm run dev` + `npm run mock` that doesn't need
+Node installed on the host.
+
+- Requires `frontend/.env` to exist first (copy from `frontend/.env.example`) — Compose reads
+  `AUTH_EMAIL`/`AUTH_PASSWORD`/`AUTH_SECRET` from it via `env_file`.
+- `NEXT_PUBLIC_API_BASE_URL` is fixed to `http://localhost:3001` at build time (the browser runs
+  outside the Compose network, so it must hit the host-published port). The frontend's Server
+  Actions instead use `API_BASE_URL=http://mock-api:3001` (the internal Docker network hostname),
+  set directly in `docker-compose.yml` — see `lib/config.ts`'s `SERVER_API_BASE_URL` split.
+- `mock-api` has a healthcheck; `frontend` waits for it (`depends_on: condition: service_healthy`)
+  before starting.
+- `docker compose down` stops both; add `-v` only if you want to drop the (anonymous, currently
+  unused) volume state too.
 
 ## JSON Server Setup
 
@@ -110,13 +127,13 @@ npm run free-ports
 ## Key Folder Conventions (expected structure)
 
 ```
-package.json         # root orchestrator only (delegates to web/ and mock-api/)
+package.json         # root orchestrator only (delegates to frontend/ and mock-api/)
 mock-api/             # standalone JSON Server project — see mock-api/README.md
-web/
+frontend/
   app/
     (auth)/login/      # login page + server action
     (private)/
-      middleware.ts    # or web/middleware.ts
+      middleware.ts    # or frontend/middleware.ts
       dashboard/       # catalogue + squad builder
   context/
     squad/

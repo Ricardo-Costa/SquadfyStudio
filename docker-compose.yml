@@ -1,0 +1,29 @@
+services:
+  mock-api:
+    build: ./mock-api
+    ports:
+      - '3001:3001'
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://localhost:3001/developers']
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Baked into the browser bundle at build time — must be reachable from the host,
+        # not the Docker network (the browser runs outside Compose).
+        NEXT_PUBLIC_API_BASE_URL: http://localhost:3001
+    ports:
+      - '3000:3000'
+    env_file:
+      - ./frontend/.env
+    environment:
+      # Overrides the server-side (Server Actions) base URL to use the internal Docker
+      # network hostname instead of NEXT_PUBLIC_API_BASE_URL's host-published port.
+      API_BASE_URL: http://mock-api:3001
+    depends_on:
+      mock-api:
+        condition: service_healthy
