@@ -8,7 +8,7 @@ export default function SquadsPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rust-600">
             Squads
           </p>
-          <h1 className="mt-1 font-display text-4xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
+          <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight text-ink-900 sm:text-3xl">
             Squads salvos
           </h1>
         </div>
