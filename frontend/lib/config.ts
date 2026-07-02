@@ -2,8 +2,17 @@
 // Keeping these here avoids the same magic number/URL being duplicated (and
 // potentially drifting) across multiple files.
 
-/** Base URL for the JSON Server mock API. Configured via NEXT_PUBLIC_API_BASE_URL. */
+/** Base URL for the JSON Server mock API, as reachable from the browser. Configured via NEXT_PUBLIC_API_BASE_URL. */
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:3001'
+
+/**
+ * Base URL for the JSON Server mock API, as reachable from the Next.js server process
+ * (Server Actions). Only differs from API_BASE_URL under Docker Compose, where the browser
+ * reaches the mock API via the host's published port but the server process reaches it via
+ * the internal Docker network hostname (see docker-compose.yml). Falls back to API_BASE_URL
+ * everywhere else (plain local dev, Vercel).
+ */
+export const SERVER_API_BASE_URL = process.env.API_BASE_URL ?? API_BASE_URL
 
 /** Number of items shown per page in the Catalogue and Squads grids. */
 export const PAGE_SIZE = 8

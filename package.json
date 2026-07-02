@@ -2,11 +2,11 @@
   "name": "squadfy-studio",
   "private": true,
   "scripts": {
-    "dev": "npm --prefix web run dev",
-    "build": "npm --prefix web run build",
-    "start": "npm --prefix web run start",
-    "lint": "npm --prefix web run lint",
-    "test": "npm --prefix web run test",
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "start": "npm --prefix frontend run start",
+    "lint": "npm --prefix frontend run lint",
+    "test": "npm --prefix frontend run test",
     "mock": "npm --prefix mock-api install --no-audit --no-fund && npm --prefix mock-api run dev",
     "free-ports": "bash scripts/free-ports.sh"
   }
