@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { SQUAD_NAME_MIN_LENGTH, SQUAD_NAME_MAX_LENGTH } from '@/lib/config'
+import { containsDangerousContent, exceedsMaxLength, isBelowMinLength } from '@/lib/validation'
 
 interface SaveSquadModalProps {
   isOpen: boolean
@@ -40,7 +42,19 @@ export default function SaveSquadModal({
   if (!isOpen) return null
 
   const trimmed = name.trim()
-  const isInvalid = trimmed === ''
+  const isTooShort = isBelowMinLength(trimmed, SQUAD_NAME_MIN_LENGTH)
+  const isTooLong = exceedsMaxLength(trimmed, SQUAD_NAME_MAX_LENGTH)
+  const hasDangerousContent = containsDangerousContent(trimmed)
+  const isInvalid = isTooShort || isTooLong || hasDangerousContent
+
+  let errorMessage = ''
+  if (isTooShort) {
+    errorMessage = `O nome deve ter pelo menos ${SQUAD_NAME_MIN_LENGTH} caracteres.`
+  } else if (isTooLong) {
+    errorMessage = `O nome deve ter no máximo ${SQUAD_NAME_MAX_LENGTH} caracteres.`
+  } else if (hasDangerousContent) {
+    errorMessage = 'O nome contém caracteres não permitidos.'
+  }
 
   function handleConfirm() {
     if (isInvalid) return
@@ -69,12 +83,13 @@ export default function SaveSquadModal({
           onKeyDown={(e) => {
             if (e.key === 'Enter') handleConfirm()
           }}
+          maxLength={SQUAD_NAME_MAX_LENGTH}
           placeholder="Ex: Squad Alpha"
           aria-label="Nome do squad"
           className="mt-4 w-full border-b border-ink-300 bg-transparent px-1 py-2 text-sm text-ink-900 placeholder-ink-400 focus:border-rust-500 focus:outline-none focus:ring-1 focus:ring-rust-400"
         />
         {isInvalid && (
-          <p className="mt-1.5 text-xs text-red-600">O nome do squad é obrigatório.</p>
+          <p className="mt-1.5 text-xs text-red-600">{errorMessage}</p>
         )}
 
         <div className="mt-6 flex justify-end gap-2">

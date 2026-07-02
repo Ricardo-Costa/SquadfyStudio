@@ -169,5 +169,5 @@ Fixed credentials for login (define in env or hardcode in the server action for 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
 shell commands, and other important information, read the current plan at
-`specs/010-delete-squad-confirmation/plan.md`
+`specs/011-input-length-limits/plan.md`
 <!-- SPECKIT END -->
