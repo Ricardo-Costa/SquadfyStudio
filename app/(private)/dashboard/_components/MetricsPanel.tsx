@@ -28,11 +28,11 @@ export default function MetricsPanel() {
         <p className="font-display text-2xl font-semibold text-graphite-50">
           {metrics.avgSeniority ? SENIORITY_LABELS[metrics.avgSeniority] : '—'}
         </p>
-        <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Seniority</p>
+        <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Senioridade</p>
       </div>
       <div className="flex-1 pl-3">
         <p className="font-display text-2xl font-semibold tabular-nums text-graphite-50">{metrics.skillCoverage.length}</p>
-        <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Skills</p>
+        <p className="mt-0.5 text-[11px] uppercase tracking-wide text-graphite-400">Habilidades</p>
       </div>
     </div>
   )

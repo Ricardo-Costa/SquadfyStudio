@@ -27,7 +27,7 @@ export default function FilterBar({
   seniorities,
   onSeniorityToggle,
   placeholder = 'Buscar desenvolvedor…',
-  ariaLabel = 'Search developers',
+  ariaLabel = 'Buscar desenvolvedores',
 }: FilterBarProps) {
   return (
     <div className="flex flex-col gap-4 border-b border-ink-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
@@ -57,7 +57,7 @@ export default function FilterBar({
         />
       </div>
 
-      <div className="flex gap-4" role="group" aria-label="Filter by seniority">
+      <div className="flex gap-4" role="group" aria-label="Filtrar por senioridade">
         {SENIORITY_OPTIONS.map(({ value, label }) => {
           const isActive = seniorities.includes(value)
           return (
