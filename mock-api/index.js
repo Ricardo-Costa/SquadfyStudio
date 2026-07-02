@@ -1,6 +1,6 @@
 const fs = require('fs')
 const jsonServer = require('json-server')
-const seed = require('../db.json')
+const seed = require('./db.json')
 
 // /tmp is the only writable directory in a Vercel Function — and it's ephemeral:
 // it can reset on any cold start, redeploy, or when a request lands on a

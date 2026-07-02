@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "JSON Server mock API for Squadfy Studio, deployed as a standalone Vercel project. Data resets on every cold start — this is a demo/interview fixture, not real persistence.",
+  "main": "index.js",
   "dependencies": {
     "json-server": "^0.17.4"
   }
